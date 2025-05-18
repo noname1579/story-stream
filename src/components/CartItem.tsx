@@ -21,7 +21,7 @@ const CartItem: React.FC<CartItemProps> = ({ item }) => {
     } else {
       removeFromCart(book.id)
     }
-  };
+  }
 
   return (
     <div className="flex items-center py-4 border-b border-gray-200">

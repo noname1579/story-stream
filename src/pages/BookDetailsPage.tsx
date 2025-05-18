@@ -4,7 +4,6 @@ import { books } from '../data/books'
 import { Star, ShoppingCart, Heart, Share2, ArrowLeft } from 'lucide-react'
 import { useCart } from '../contexts/CartContext'
 import { useWishlist } from '../contexts/WishlistContext'
-import BookGrid from '../components/BookGrid'
 
 const BookDetailsPage: React.FC = () => {
   const { id } = useParams<{ id: string }>()
@@ -16,14 +15,14 @@ const BookDetailsPage: React.FC = () => {
   if (!book) {
     return (
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center">
-        <h2 className="text-2xl font-serif font-bold text-gray-800 mb-4">Book not found</h2>
-        <p className="text-gray-600 mb-6">The book you're looking for doesn't exist or has been removed.</p>
+        <h2 className="text-2xl font-serif font-bold text-gray-800 mb-4">Книги не найдены</h2>
+        <p className="text-gray-600 mb-6">Книга, которую вы ищете, не существует или была удалена</p>
         <Link 
           to="/books"
           className="inline-flex items-center bg-amber-500 text-white hover:bg-amber-600 rounded-full px-6 py-3 font-medium transition-colors"
         >
           <ArrowLeft className="mr-2 h-5 w-5" />
-          Back to Books
+          Вернуться в каталог
         </Link>
       </div>
     )
@@ -41,8 +40,6 @@ const BookDetailsPage: React.FC = () => {
     }
   }
   
-  const similarBooks = books.filter(b => b.id !== book.id && b.genre.some(g => book.genre.includes(g))).slice(0, 4)
-  
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <Link 
@@ -50,7 +47,7 @@ const BookDetailsPage: React.FC = () => {
         className="inline-flex items-center text-gray-600 hover:text-amber-500 mb-6 transition-colors"
       >
         <ArrowLeft className="mr-2 h-5 w-5" />
-        Back to Books
+        Вернуться в каталог
       </Link>
       
       <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
@@ -109,11 +106,9 @@ const BookDetailsPage: React.FC = () => {
             <button
               onClick={handleWishlistToggle}
               className={`p-3 rounded-full border transition-colors ${
-                isInWishlist(book.id) 
-                  ? 'bg-rose-50 border-rose-200 text-rose-500' 
-                  : 'border-gray-300 text-gray-600 hover:border-amber-500 hover:text-amber-500'
+                isInWishlist(book.id) ? 'bg-rose-50 border-rose-200 text-rose-500' : 'border-gray-300 text-gray-600 hover:border-amber-500 hover:text-amber-500'
               }`}
-              title={isInWishlist(book.id) ? "Remove from Wishlist" : "Add to Wishlist"}
+              title={isInWishlist(book.id) ? "Удалить из вишлиста" : "Добавить в вишлист"}
             >
               <Heart className={`h-5 w-5 ${isInWishlist(book.id) ? 'fill-rose-500' : ''}`} />
             </button>
@@ -128,27 +123,16 @@ const BookDetailsPage: React.FC = () => {
           
           <div className="border-t border-gray-200 pt-6">
             <div className="flex items-center justify-between mb-2">
-              <span className="text-gray-600">Publication Date</span>
+              <span className="text-gray-600">Дата публикации</span>
               <span className="font-medium">{new Date(book.releaseDate).toLocaleDateString()}</span>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-gray-600">Availability</span>
-              <span className="text-green-600 font-medium">In Stock</span>
+              <span className="text-gray-600">Наличие</span>
+              <span className="text-green-600 font-medium">В наличии</span>
             </div>
           </div>
         </div>
       </div>
-      
-      {similarBooks.length > 0 && (
-        <div className="mt-16">
-          <h2 className="font-serif text-2xl font-semibold text-gray-800 mb-6">You Might Also Like</h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {similarBooks.map(() => (
-              <BookGrid books={similarBooks} />
-            ))}
-          </div>
-        </div>
-      )}
     </div>
   )
 }

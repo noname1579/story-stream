@@ -30,7 +30,7 @@ const BookCard: React.FC<BookCardProps> = ({ book }) => {
         <img 
           src={book.coverImage} 
           alt={book.title} 
-          className="w-full h-full object-cover object-center transition-transform duration-500 hover:scale-110"
+          className="w-full h-full object-cover object-center"
         />
         {book.isNew && (
           <div className="absolute top-2 right-2 bg-amber-500 text-white text-xs uppercase font-bold rounded-full px-3 py-1 shadow-md">
@@ -47,13 +47,13 @@ const BookCard: React.FC<BookCardProps> = ({ book }) => {
         </button>
       </div>
       
-      <div className="p-4 flex-1 flex flex-col">
+      <div className="p-2 flex-1 flex flex-col">
         <div className="flex-1">
           <div className="flex justify-between items-start">
             <h3 className="font-serif text-lg font-medium text-gray-800 mb-1 line-clamp-2">{book.title}</h3>
-            <div className="flex items-center text-amber-500 ml-2">
+            <div className="flex items-center text-amber-600 ml-2">
               <span className="text-sm">★</span>
-              <span className="text-xs ml-1">{book.rating}</span>
+              <span className="text-md ml-1">{book.rating}</span>
             </div>
           </div>
           <p className="text-gray-600 text-sm mb-2">{book.author}</p>
@@ -68,10 +68,10 @@ const BookCard: React.FC<BookCardProps> = ({ book }) => {
         </div>
         
         <div className="mt-auto flex items-center justify-between">
-          <span className="text-lg font-bold text-gray-800">${book.price.toFixed(2)}</span>
+          <span className="text-lg font-bold text-gray-800">{book.price.toFixed(2)}</span>
           <button 
             onClick={handleAddToCart}
-            className="flex items-center bg-amber-500 hover:bg-amber-600 text-white py-1 px-3 rounded-full transition-colors text-sm"
+            className="flex items-center bg-amber-500 hover:bg-amber-600 text-white py-1 px-2 rounded-full transition-colors text-sm"
           >
             <ShoppingCart className="h-4 w-4 mr-1" />
             Добавить

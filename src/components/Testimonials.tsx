@@ -4,19 +4,19 @@ const testimonials = [
   {
     id: 1,
     comment: "StoryStream полностью изменил мой опыт чтения. Их коллекция огромна, а рекомендации всегда точные!",
-    author: "Сара Джонсон",
+    author: "Олег Иванов",
     avatar: "https://img.freepik.com/free-photo/medium-shot-man-wearing-glasses_23-2149396227.jpg?semt=ais_hybrid&w=740"
   },
   {
     id: 2,
     comment: "Как заядлый читатель, я пробовал много книжных магазинов, но ни один не сравнится с ассортиментом и сервисом StoryStream.",
-    author: "Майкл Чен",
+    author: "Петр Чен",
     avatar: "https://img.freepik.com/free-photo/portrait-interesting-young-man-winter-clothes_158595-914.jpg?semt=ais_hybrid&w=740"
   },
   {
     id: 3,
     comment: "Доставка всегда вовремя, а книги приходят в идеальном состоянии. StoryStream стал моим основным книжным магазином.",
-    author: "Эмили Родригес",
+    author: "Ксения Родригес",
     avatar: "https://img.freepik.com/free-photo/medium-shot-woman-posing-outside_23-2148877793.jpg?semt=ais_hybrid&w=740"
   }
 ]
