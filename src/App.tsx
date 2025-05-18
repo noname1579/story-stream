@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { Routes, Route, HashRouter } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import HomePage from './pages/HomePage'
@@ -20,7 +20,7 @@ function App() {
   }
 
   return (
-    <Router>
+    <HashRouter basename='/story-stream'>
       <AuthProvider>
         <CartProvider>
           <WishlistProvider>
@@ -28,12 +28,12 @@ function App() {
               <Navbar onSearchSubmit={handleSearchSubmit} />
               <main className="flex-grow bg-gray-50">
                 <Routes>
-                  <Route path="/story-stream/" element={<HomePage searchQuery={searchQuery} />} />
-                  <Route path="/story-stream/books" element={<BooksPage searchQuery={searchQuery} />} />
-                  <Route path="/story-stream/books/:id" element={<BookDetailsPage />} />
-                  <Route path="/story-stream/cart" element={<CartPage />} />
-                  <Route path="/story-stream/wishlist" element={<WishlistPage />} />
-                  <Route path="/story-stream/login" element={<LoginPage />} />
+                  <Route path="/" element={<HomePage searchQuery={searchQuery} />} />
+                  <Route path="/books" element={<BooksPage searchQuery={searchQuery} />} />
+                  <Route path="/books/:id" element={<BookDetailsPage />} />
+                  <Route path="/cart" element={<CartPage />} />
+                  <Route path="/wishlist" element={<WishlistPage />} />
+                  <Route path="/login" element={<LoginPage />} />
                 </Routes>
               </main>
               <Footer />
@@ -41,7 +41,7 @@ function App() {
           </WishlistProvider>
         </CartProvider>
       </AuthProvider>
-    </Router>
+    </HashRouter>
   )
 }
 
