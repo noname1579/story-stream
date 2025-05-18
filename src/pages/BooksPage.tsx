@@ -216,7 +216,6 @@ const BooksPage: React.FC<BooksPageProps> = ({ searchQuery }) => {
           </div>
         )}
         
-        {/* Books grid and sorting controls */}
         <div className="md:col-span-3">
           <div className="bg-white rounded-lg shadow-md p-6 mb-6">
             <div className="flex items-center justify-between">
@@ -229,7 +228,7 @@ const BooksPage: React.FC<BooksPageProps> = ({ searchQuery }) => {
                 <button
                   onClick={toggleSortOrder}
                   className="flex items-center text-gray-700 hover:text-amber-500 transition-colors"
-                  title={`Sort ${sortOrder === 'asc' ? 'Descending' : 'Ascending'}`}
+                  title={`Sort ${sortOrder === 'asc' ? 'по убыванию' : 'по возрастанию'}`}
                 >
                   {sortOrder === 'asc' 
                     ? <SortAsc className="h-5 w-5" /> 
@@ -244,9 +243,9 @@ const BooksPage: React.FC<BooksPageProps> = ({ searchQuery }) => {
             <BookGrid books={filteredBooks} />
           ) : (
             <div className="bg-white rounded-lg shadow-md p-8 text-center">
-              <h2 className="text-xl font-serif font-semibold text-gray-800 mb-2">No books found</h2>
+              <h2 className="text-xl font-serif font-semibold text-gray-800 mb-2">Книги не найдены</h2>
               <p className="text-gray-600">
-                Try adjusting your search or filter criteria to find what you're looking for.
+                Попробуйте изменить критерии поиска или фильтрации, чтобы найти то, что вы ищете
               </p>
             </div>
           )}
