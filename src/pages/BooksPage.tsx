@@ -15,7 +15,6 @@ const BooksPage: React.FC<BooksPageProps> = ({ searchQuery }) => {
   const [sortBy, setSortBy] = useState<'title' | 'price'>('title')
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false)
 
-  // Extract all unique genres from books
   const allGenres = Array.from(
     new Set(
       books.flatMap(book => book.genre)
@@ -29,7 +28,6 @@ const BooksPage: React.FC<BooksPageProps> = ({ searchQuery }) => {
       result = searchBooks(searchQuery);
     }
     
-    // Apply genre filter if selected
     if (selectedGenre) {
       result = result.filter(book => book.genre.includes(selectedGenre))
     }
