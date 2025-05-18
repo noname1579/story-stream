@@ -9,9 +9,9 @@ interface HomePageProps {
 }
 
 const HomePage: React.FC<HomePageProps> = ({ searchQuery }) => {
-  const featuredBooks = getFeaturedBooks();
-  const newReleases = getNewReleases();
-  const searchResults = searchQuery ? searchBooks(searchQuery) : null;
+  const featuredBooks = getFeaturedBooks()
+  const newReleases = getNewReleases()
+  const searchResults = searchQuery ? searchBooks(searchQuery) : null
 
   return (
     <div>
@@ -21,7 +21,6 @@ const HomePage: React.FC<HomePageProps> = ({ searchQuery }) => {
         {searchQuery ? (
           <BookGrid 
             books={searchResults || []} 
-            title={`Search Results for "${searchQuery}"`} 
           />
         ) : (
           <div>
