@@ -19,7 +19,7 @@ const BookGrid: React.FC<BookGridProps> = ({ books, title }) => {
         ))}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default BookGrid;
+export default BookGrid

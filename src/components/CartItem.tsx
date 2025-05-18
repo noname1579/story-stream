@@ -1,25 +1,25 @@
-import React from 'react';
-import { CartItem as CartItemType } from '../types';
-import { Trash2, Plus, Minus } from 'lucide-react';
-import { useCart } from '../contexts/CartContext';
+import React from 'react'
+import { CartItem as CartItemType } from '../types'
+import { Trash2, Plus, Minus } from 'lucide-react'
+import { useCart } from '../contexts/CartContext'
 
 interface CartItemProps {
-  item: CartItemType;
+  item: CartItemType
 }
 
 const CartItem: React.FC<CartItemProps> = ({ item }) => {
-  const { updateQuantity, removeFromCart } = useCart();
-  const { book, quantity } = item;
+  const { updateQuantity, removeFromCart } = useCart()
+  const { book, quantity } = item
 
   const handleIncrease = () => {
-    updateQuantity(book.id, quantity + 1);
+    updateQuantity(book.id, quantity + 1)
   };
 
   const handleDecrease = () => {
     if (quantity > 1) {
-      updateQuantity(book.id, quantity - 1);
+      updateQuantity(book.id, quantity - 1)
     } else {
-      removeFromCart(book.id);
+      removeFromCart(book.id)
     }
   };
 
@@ -56,7 +56,7 @@ const CartItem: React.FC<CartItemProps> = ({ item }) => {
       </div>
 
       <div className="ml-4 text-base font-medium text-gray-900">
-        ${(book.price * quantity).toFixed(2)}
+        {(book.price * quantity).toFixed(2)}
       </div>
 
       <button
@@ -67,7 +67,7 @@ const CartItem: React.FC<CartItemProps> = ({ item }) => {
         <Trash2 className="h-5 w-5" />
       </button>
     </div>
-  );
-};
+  )
+}
 
-export default CartItem;
+export default CartItem

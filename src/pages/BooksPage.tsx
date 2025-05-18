@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { Book } from '../types';
+import React, { useState, useEffect } from 'react'
+import { Book } from '../types'
 import BookGrid from '../components/BookGrid';
-import { books, getBooksByGenre, searchBooks } from '../data/books';
-import { Filter, SortAsc, SortDesc } from 'lucide-react';
+import { books, searchBooks } from '../data/books'
+import { Filter, SortAsc, SortDesc } from 'lucide-react'
 
 interface BooksPageProps {
   searchQuery: string;
 }
 
 const BooksPage: React.FC<BooksPageProps> = ({ searchQuery }) => {
-  const [filteredBooks, setFilteredBooks] = useState<Book[]>([]);
-  const [selectedGenre, setSelectedGenre] = useState<string>('');
-  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
-  const [sortBy, setSortBy] = useState<'title' | 'price'>('title');
-  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
+  const [filteredBooks, setFilteredBooks] = useState<Book[]>([])
+  const [selectedGenre, setSelectedGenre] = useState<string>('')
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc')
+  const [sortBy, setSortBy] = useState<'title' | 'price'>('title')
+  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false)
 
   // Extract all unique genres from books
   const allGenres = Array.from(
@@ -23,47 +23,41 @@ const BooksPage: React.FC<BooksPageProps> = ({ searchQuery }) => {
   ).sort();
 
   useEffect(() => {
-    let result = [...books];
+    let result = [...books]
     
-    // Apply search filter if query exists
     if (searchQuery) {
       result = searchBooks(searchQuery);
     }
     
     // Apply genre filter if selected
     if (selectedGenre) {
-      result = result.filter(book => book.genre.includes(selectedGenre));
+      result = result.filter(book => book.genre.includes(selectedGenre))
     }
     
-    // Apply sorting
     result.sort((a, b) => {
       if (sortBy === 'title') {
         return sortOrder === 'asc'
           ? a.title.localeCompare(b.title)
-          : b.title.localeCompare(a.title);
+          : b.title.localeCompare(a.title)
       } else {
         return sortOrder === 'asc'
           ? a.price - b.price
           : b.price - a.price;
       }
-    });
+    })
     
     setFilteredBooks(result);
-  }, [searchQuery, selectedGenre, sortOrder, sortBy]);
+  }, [searchQuery, selectedGenre, sortOrder, sortBy])
 
   const toggleSortOrder = () => {
-    setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+    setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')
   };
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="flex justify-between items-center mb-8">
         <h1 className="font-serif text-3xl font-bold text-gray-800">
-          {searchQuery 
-            ? `Search Results for "${searchQuery}"` 
-            : selectedGenre 
-              ? `${selectedGenre} Books` 
-              : 'All Books'}
+          {searchQuery ? `Результаты поиск по запросу: "${searchQuery}"` : selectedGenre ? `Книги в жанре ${selectedGenre}` : 'Все книги'}
         </h1>
         
         <button
@@ -71,18 +65,17 @@ const BooksPage: React.FC<BooksPageProps> = ({ searchQuery }) => {
           onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}
         >
           <Filter className="h-5 w-5 mr-1" />
-          Filters
+          Фильтры
         </button>
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-        {/* Filter sidebar - desktop */}
         <div className="hidden md:block">
           <div className="bg-white rounded-lg shadow-md p-6">
-            <h2 className="font-serif text-lg font-semibold text-gray-800 mb-4">Filters</h2>
+            <h2 className="font-serif text-lg font-semibold text-gray-800 mb-4">Фильтры</h2>
             
             <div className="mb-6">
-              <h3 className="font-medium text-gray-700 mb-2">Genres</h3>
+              <h3 className="font-medium text-gray-700 mb-2">Жанры</h3>
               <div className="space-y-2">
                 <label className="flex items-center">
                   <input
@@ -92,7 +85,7 @@ const BooksPage: React.FC<BooksPageProps> = ({ searchQuery }) => {
                     onChange={() => setSelectedGenre('')}
                     className="text-amber-500 focus:ring-amber-500"
                   />
-                  <span className="ml-2 text-gray-600">All Genres</span>
+                  <span className="ml-2 text-gray-600">Все жанры</span>
                 </label>
                 
                 {allGenres.map((genre) => (
@@ -111,7 +104,7 @@ const BooksPage: React.FC<BooksPageProps> = ({ searchQuery }) => {
             </div>
             
             <div>
-              <h3 className="font-medium text-gray-700 mb-2">Sort By</h3>
+              <h3 className="font-medium text-gray-700 mb-2">Сортировка по</h3>
               <div className="space-y-2">
                 <label className="flex items-center">
                   <input
@@ -121,7 +114,7 @@ const BooksPage: React.FC<BooksPageProps> = ({ searchQuery }) => {
                     onChange={() => setSortBy('title')}
                     className="text-amber-500 focus:ring-amber-500"
                   />
-                  <span className="ml-2 text-gray-600">Title</span>
+                  <span className="ml-2 text-gray-600">Названию</span>
                 </label>
                 
                 <label className="flex items-center">
@@ -132,7 +125,7 @@ const BooksPage: React.FC<BooksPageProps> = ({ searchQuery }) => {
                     onChange={() => setSortBy('price')}
                     className="text-amber-500 focus:ring-amber-500"
                   />
-                  <span className="ml-2 text-gray-600">Price</span>
+                  <span className="ml-2 text-gray-600">Цене</span>
                 </label>
               </div>
             </div>
@@ -143,7 +136,7 @@ const BooksPage: React.FC<BooksPageProps> = ({ searchQuery }) => {
           <div className="md:hidden fixed inset-0 bg-black bg-opacity-25 z-50 flex justify-end">
             <div className="bg-white w-3/4 h-full overflow-y-auto p-6">
               <div className="flex justify-between items-center mb-4">
-                <h2 className="font-serif text-lg font-semibold text-gray-800">Filters</h2>
+                <h2 className="font-serif text-lg font-semibold text-gray-800">Фильтры</h2>
                 <button
                   onClick={() => setIsMobileFilterOpen(false)}
                   className="text-gray-500"
@@ -153,7 +146,7 @@ const BooksPage: React.FC<BooksPageProps> = ({ searchQuery }) => {
               </div>
               
               <div className="mb-6">
-                <h3 className="font-medium text-gray-700 mb-2">Genres</h3>
+                <h3 className="font-medium text-gray-700 mb-2">Жанры</h3>
                 <div className="space-y-2">
                   <label className="flex items-center">
                     <input
@@ -188,7 +181,7 @@ const BooksPage: React.FC<BooksPageProps> = ({ searchQuery }) => {
               </div>
               
               <div>
-                <h3 className="font-medium text-gray-700 mb-2">Sort By</h3>
+                <h3 className="font-medium text-gray-700 mb-2">Сортировка по</h3>
                 <div className="space-y-2">
                   <label className="flex items-center">
                     <input
@@ -201,7 +194,7 @@ const BooksPage: React.FC<BooksPageProps> = ({ searchQuery }) => {
                       }}
                       className="text-amber-500 focus:ring-amber-500"
                     />
-                    <span className="ml-2 text-gray-600">Title</span>
+                    <span className="ml-2 text-gray-600">Названию</span>
                   </label>
                   
                   <label className="flex items-center">
@@ -215,7 +208,7 @@ const BooksPage: React.FC<BooksPageProps> = ({ searchQuery }) => {
                       }}
                       className="text-amber-500 focus:ring-amber-500"
                     />
-                    <span className="ml-2 text-gray-600">Price</span>
+                    <span className="ml-2 text-gray-600">Цене</span>
                   </label>
                 </div>
               </div>
@@ -228,11 +221,11 @@ const BooksPage: React.FC<BooksPageProps> = ({ searchQuery }) => {
           <div className="bg-white rounded-lg shadow-md p-6 mb-6">
             <div className="flex items-center justify-between">
               <div>
-                <span className="text-gray-600">Showing {filteredBooks.length} books</span>
+                <span className="text-gray-600">Показано {filteredBooks.length} книг</span>
               </div>
               
               <div className="flex items-center">
-                <span className="mr-2 text-gray-600">Sort:</span>
+                <span className="mr-2 text-gray-600">Сортировка:</span>
                 <button
                   onClick={toggleSortOrder}
                   className="flex items-center text-gray-700 hover:text-amber-500 transition-colors"

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 
 const categories = [
   { id: 1, name: 'Художественная литература', icon: '📚', color: 'bg-amber-500' },
@@ -40,7 +40,7 @@ const FeaturedCategories: React.FC = () => {
         </div>
       </div>
     </section>
-  );
-};
+  )
+}
 
-export default FeaturedCategories;
+export default FeaturedCategories

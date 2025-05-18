@@ -1,4 +1,3 @@
-import React, { useState } from 'react'
 import Hero from '../components/Hero'
 import BookGrid from '../components/BookGrid'
 import FeaturedCategories from '../components/FeaturedCategories'
@@ -26,8 +25,8 @@ const HomePage: React.FC<HomePageProps> = ({ searchQuery }) => {
           />
         ) : (
           <div>
-            <BookGrid books={featuredBooks} title="Featured Books" />
-            <BookGrid books={newReleases} title="New Releases" />
+            <BookGrid books={featuredBooks} title="Рекомендуемые книги" />
+            <BookGrid books={newReleases} title="Новинки" />
           </div>
         )}
       </div>

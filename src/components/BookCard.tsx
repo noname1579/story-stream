@@ -9,8 +9,8 @@ interface BookCardProps {
 }
 
 const BookCard: React.FC<BookCardProps> = ({ book }) => {
-  const { addToCart } = useCart();
-  const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
+  const { addToCart } = useCart()
+  const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist()
   
   const handleAddToCart = () => {
     addToCart(book);
@@ -34,7 +34,7 @@ const BookCard: React.FC<BookCardProps> = ({ book }) => {
         />
         {book.isNew && (
           <div className="absolute top-2 right-2 bg-amber-500 text-white text-xs uppercase font-bold rounded-full px-3 py-1 shadow-md">
-            New
+            Новая
           </div>
         )}
         <button 

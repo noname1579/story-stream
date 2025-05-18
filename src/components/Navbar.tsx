@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { BookOpen, ShoppingCart, User, Heart, Search, Menu, X } from 'lucide-react';
-import { useCart } from '../contexts/CartContext';
-import { useAuth } from '../contexts/AuthContext';
+import React, { useState } from 'react'
+import { BookOpen, ShoppingCart, User, Heart, Search, Menu, X } from 'lucide-react'
+import { useCart } from '../contexts/CartContext'
+import { useAuth } from '../contexts/AuthContext'
 
 interface NavbarProps {
   onSearchSubmit: (query: string) => void;
