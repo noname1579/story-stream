@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { BookOpen, ShoppingCart, User, Heart, Search, Menu, X } from 'lucide-react'
 import { useCart } from '../contexts/CartContext'
 import { useAuth } from '../contexts/AuthContext'
@@ -8,19 +8,31 @@ interface NavbarProps {
 }
 
 const Navbar: React.FC<NavbarProps> = ({ onSearchSubmit }) => {
-  const { totalItems } = useCart();
-  const { isAuthenticated, logout } = useAuth();
-  const [searchQuery, setSearchQuery] = useState('');
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { totalItems } = useCart()
+  const { isAuthenticated, logout } = useAuth()
+  const [searchQuery, setSearchQuery] = useState('')
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
   const handleSearchSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    onSearchSubmit(searchQuery);
-  };
+    e.preventDefault()
+    onSearchSubmit(searchQuery)
+  }
 
   const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
+    setIsMobileMenuOpen(!isMobileMenuOpen)
+  }
+
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden'
+    } 
+    else {
+      document.body.style.overflow = ''
+    }
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [isMobileMenuOpen])
 
   return (
     <nav className="bg-white shadow-md sticky top-0 z-50">
@@ -76,7 +88,7 @@ const Navbar: React.FC<NavbarProps> = ({ onSearchSubmit }) => {
                     onClick={logout}
                     className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-amber-50"
                   >
-                    Logout
+                    Выйти из профиля
                   </button>
                 </div>
               </div>
@@ -87,7 +99,6 @@ const Navbar: React.FC<NavbarProps> = ({ onSearchSubmit }) => {
             )}
           </div>
 
-          {/* Mobile menu button */}
           <div className="md:hidden flex items-center">
             <button
               onClick={toggleMobileMenu}
@@ -103,7 +114,6 @@ const Navbar: React.FC<NavbarProps> = ({ onSearchSubmit }) => {
         </div>
       </div>
 
-      {/* Mobile menu */}
       {isMobileMenuOpen && (
         <div className="md:hidden">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
@@ -120,42 +130,42 @@ const Navbar: React.FC<NavbarProps> = ({ onSearchSubmit }) => {
               </button>
             </form>
             <a href="/" className="text-gray-700 hover:text-amber-500 block px-3 py-2 rounded-md font-medium">
-              Home
+              Главная
             </a>
             <a href="/books" className="text-gray-700 hover:text-amber-500 block px-3 py-2 rounded-md font-medium">
-              Books
+              Каталог
             </a>
             <a href="/wishlist" className="text-gray-700 hover:text-amber-500 block px-3 py-2 rounded-md font-medium">
-              Wishlist
+              Вишлист
             </a>
             <a href="/cart" className="text-gray-700 hover:text-amber-500 block px-3 py-2 rounded-md font-medium">
-              Cart ({totalItems})
+              Корзина ({totalItems})
             </a>
             {isAuthenticated ? (
               <>
                 <a href="/profile" className="text-gray-700 hover:text-amber-500 block px-3 py-2 rounded-md font-medium">
-                  Profile
+                  Профиль
                 </a>
                 <a href="/orders" className="text-gray-700 hover:text-amber-500 block px-3 py-2 rounded-md font-medium">
-                  Orders
+                  Заказы
                 </a>
                 <button
                   onClick={logout}
                   className="w-full text-left text-gray-700 hover:text-amber-500 block px-3 py-2 rounded-md font-medium"
                 >
-                  Logout
+                  Выйти из профиля
                 </button>
               </>
             ) : (
               <a href="/login" className="text-gray-700 hover:text-amber-500 block px-3 py-2 rounded-md font-medium">
-                Login
+                Войти
               </a>
             )}
           </div>
         </div>
       )}
     </nav>
-  );
-};
+  )
+}
 
-export default Navbar;
+export default Navbar
