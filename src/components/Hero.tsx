@@ -15,11 +15,11 @@ const Hero: React.FC = () => {
               От бестселлеров до скрытых жемчужин — найдите идеальные истории, которые обогатят ваш разум и вдохновят ваше воображение
             </p>
             <div className="flex flex-wrap gap-4">
-              <a href="/books" className="inline-flex items-center bg-white text-amber-600 hover:bg-gray-100 rounded-full px-4 py-3 font-medium transition-colors">
+              <a href="/story-stream/books" className="inline-flex items-center bg-white text-amber-600 hover:bg-gray-100 rounded-full px-4 py-3 font-medium transition-colors">
                 Посмотреть все книги
                 <ChevronRight className="ml-2 h-5 w-5" />
               </a>
-              <a href="/featured" className="inline-flex items-center bg-transparent text-white border border-white hover:bg-white/10 rounded-full px-14 md:px-14 py-3 font-medium transition-colors">
+              <a href="/story-stream/featured" className="inline-flex items-center bg-transparent text-white border border-white hover:bg-white/10 rounded-full px-14 md:px-14 py-3 font-medium transition-colors">
                 Популярные
               </a>
             </div>
@@ -55,7 +55,7 @@ const Hero: React.FC = () => {
               <div className="mt-4 flex justify-between items-center">
                 <span className="text-lg font-bold text-gray-800 flex">999 <RussianRuble className='text-gray-600' /></span>
                 <a
-                  href="/books/2"
+                  href="/story-stream/books/2"
                   className="bg-amber-500 hover:bg-amber-600 text-white font-bold py-2 px-4 rounded-full text-sm transition-colors"
                 >
                   Подробности

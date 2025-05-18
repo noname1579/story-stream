@@ -59,7 +59,7 @@ const Navbar: React.FC<NavbarProps> = ({ onSearchSubmit }) => {
               </form>
             </div>
 
-            <a href="/story-stream/" className="text-gray-700 hover:text-amber-500 px-3 py-2 rounded-md font-medium transition-colors">
+            <a href="/" className="text-gray-700 hover:text-amber-500 px-3 py-2 rounded-md font-medium transition-colors">
               Главная
             </a>
             <a href="/story-stream/books" className="text-gray-700 hover:text-amber-500 px-3 py-2 rounded-md font-medium transition-colors">
@@ -120,7 +120,7 @@ const Navbar: React.FC<NavbarProps> = ({ onSearchSubmit }) => {
             <form onSubmit={handleSearchSubmit} className="flex items-center mb-3">
               <input
                 type="text"
-                placeholder="Search books..."
+                placeholder="Поиск книг..."
                 className="w-full pl-10 pr-4 py-2 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -146,7 +146,7 @@ const Navbar: React.FC<NavbarProps> = ({ onSearchSubmit }) => {
                 <a href="/story-stream/profile" className="text-gray-700 hover:text-amber-500 block px-3 py-2 rounded-md font-medium">
                   Профиль
                 </a>
-                <a href="/story-stream/orders" className="text-gray-700 hover:text-amber-500 block px-3 py-2 rounded-md font-medium">
+                <a href="/orders" className="text-gray-700 hover:text-amber-500 block px-3 py-2 rounded-md font-medium">
                   Заказы
                 </a>
                 <button
