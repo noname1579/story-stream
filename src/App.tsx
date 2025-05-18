@@ -28,8 +28,8 @@ function App() {
               <Navbar onSearchSubmit={handleSearchSubmit} />
               <main className="flex-grow bg-gray-50">
                 <Routes>
-                  <Route path="/" element={<HomePage searchQuery={searchQuery} />} />
-                  <Route path="/books" element={<BooksPage searchQuery={searchQuery} />} />
+                  <Route path="/story-stream/" element={<HomePage searchQuery={searchQuery} />} />
+                  <Route path="/story-stream/books" element={<BooksPage searchQuery={searchQuery} />} />
                   <Route path="/books/:id" element={<BookDetailsPage />} />
                   <Route path="/cart" element={<CartPage />} />
                   <Route path="/wishlist" element={<WishlistPage />} />
