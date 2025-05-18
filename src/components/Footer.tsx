@@ -16,21 +16,21 @@ const Footer: React.FC = () => {
           <div>
             <h3 className="font-bold text-lg mb-4">Навигация</h3>
             <ul className="space-y-2">
-              <li><a href="/" className="text-gray-300 hover:text-amber-400 transition-colors">Главная</a></li>
-              <li><a href="/books" className="text-gray-300 hover:text-amber-400 transition-colors">Каталог</a></li>
-              <li><a href="/cart" className="text-gray-300 hover:text-amber-400 transition-colors">Корзина</a></li>
-              <li><a href="/wishlist" className="text-gray-300 hover:text-amber-400 transition-colors">Вишлист</a></li>
+              <li><a href="/story-stream/" className="text-gray-300 hover:text-amber-400 transition-colors">Главная</a></li>
+              <li><a href="/story-stream/books" className="text-gray-300 hover:text-amber-400 transition-colors">Каталог</a></li>
+              <li><a href="/story-stream/cart" className="text-gray-300 hover:text-amber-400 transition-colors">Корзина</a></li>
+              <li><a href="/story-stream/wishlist" className="text-gray-300 hover:text-amber-400 transition-colors">Вишлист</a></li>
             </ul>
           </div>
 
           <div>
             <h3 className="font-bold text-lg mb-4">Популярные жанры</h3>
             <ul className="space-y-2">
-              <li><a href="/books?genre=Fiction" className="text-gray-300 hover:text-amber-400 transition-colors">Художественная литература</a></li>
-              <li><a href="/books?genre=Non-Fiction" className="text-gray-300 hover:text-amber-400 transition-colors">Научно-популярная литература</a></li>
-              <li><a href="/books?genre=Self-Help" className="text-gray-300 hover:text-amber-400 transition-colors">Психология</a></li>
-              <li><a href="/books?genre=Science Fiction" className="text-gray-300 hover:text-amber-400 transition-colors">Научная фантастика</a></li>
-              <li><a href="/books?genre=Romance" className="text-gray-300 hover:text-amber-400 transition-colors">Роман</a></li>
+              <li><a href="/story-stream/books?genre=Fiction" className="text-gray-300 hover:text-amber-400 transition-colors">Художественная литература</a></li>
+              <li><a href="/story-stream/books?genre=Non-Fiction" className="text-gray-300 hover:text-amber-400 transition-colors">Научно-популярная литература</a></li>
+              <li><a href="/story-stream/books?genre=Self-Help" className="text-gray-300 hover:text-amber-400 transition-colors">Психология</a></li>
+              <li><a href="/story-stream/books?genre=Science Fiction" className="text-gray-300 hover:text-amber-400 transition-colors">Научная фантастика</a></li>
+              <li><a href="/story-stream/books?genre=Romance" className="text-gray-300 hover:text-amber-400 transition-colors">Роман</a></li>
             </ul>
           </div>
 
@@ -66,7 +66,7 @@ const Footer: React.FC = () => {
         </div>
       </div>
     </footer>
-  );
-};
+  )
+}
 
 export default Footer;
