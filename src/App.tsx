@@ -20,7 +20,7 @@ function App() {
   }
 
   return (
-    <HashRouter basename='/story-stream'>
+    <HashRouter>
       <AuthProvider>
         <CartProvider>
           <WishlistProvider>
