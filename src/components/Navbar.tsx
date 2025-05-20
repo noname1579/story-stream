@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { BookOpen, ShoppingCart, User, Heart, Search, Menu, X } from 'lucide-react'
 import { useCart } from '../contexts/CartContext'
 import { useAuth } from '../contexts/AuthContext'
+import { Link } from 'react-router-dom';
 
 interface NavbarProps {
   onSearchSubmit: (query: string) => void;
@@ -62,9 +63,7 @@ const Navbar: React.FC<NavbarProps> = ({ onSearchSubmit }) => {
             <a href="/" className="text-gray-700 hover:text-amber-500 px-3 py-2 rounded-md font-medium transition-colors">
               Главная
             </a>
-            <a href="/story-stream/books" className="text-gray-700 hover:text-amber-500 px-3 py-2 rounded-md font-medium transition-colors">
-              Каталог
-            </a>
+            <Link to='/books' className="text-gray-700 hover:text-amber-500 px-3 py-2 rounded-md font-medium transition-colors">Каталог</Link>
             <a href="/story-stream/wishlist" className="text-gray-700 hover:text-amber-500 px-3 py-2 relative">
               <Heart className="h-6 w-6" />
             </a>
