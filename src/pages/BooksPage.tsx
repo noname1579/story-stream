@@ -5,7 +5,7 @@ import { books, searchBooks } from '../data/books'
 import { Filter, SortAsc, SortDesc } from 'lucide-react'
 
 interface BooksPageProps {
-  searchQuery: string;
+  searchQuery: string
 }
 
 const BooksPage: React.FC<BooksPageProps> = ({ searchQuery }) => {
