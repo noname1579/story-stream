@@ -36,7 +36,7 @@ const CartItem: React.FC<CartItemProps> = ({ item }) => {
       <div className="ml-4 flex-1">
         <h3 className="font-serif text-base font-medium text-gray-800">{book.title}</h3>
         <p className="text-sm text-gray-600">{book.author}</p>
-        <p className="mt-1 text-base font-medium text-amber-600">${book.price.toFixed(2)}</p>
+        <p className="mt-1 text-base font-medium text-amber-600">{book.price.toFixed(2)}</p>
       </div>
 
       <div className="flex items-center border border-gray-200 rounded">
@@ -62,7 +62,7 @@ const CartItem: React.FC<CartItemProps> = ({ item }) => {
       <button
         onClick={() => removeFromCart(book.id)}
         className="ml-4 text-gray-400 hover:text-red-500 transition-colors"
-        title="Remove item"
+        title="Очистить"
       >
         <Trash2 className="h-5 w-5" />
       </button>

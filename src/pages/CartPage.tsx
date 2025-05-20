@@ -5,7 +5,7 @@ import { useCart } from '../contexts/CartContext'
 import { ShoppingCart, CreditCard, ArrowRight, Trash2 } from 'lucide-react'
 
 const CartPage: React.FC = () => {
-  const { cart, totalItems, totalPrice, clearCart } = useCart();
+  const { cart, totalItems, totalPrice, clearCart } = useCart()
 
   if (cart.length === 0) {
     return (
@@ -35,14 +35,14 @@ const CartPage: React.FC = () => {
           <div className="bg-white rounded-lg shadow-md p-6">
             <div className="flex justify-between items-center mb-4">
               <h2 className="font-serif text-xl font-semibold text-gray-800">
-                Cart Items ({totalItems})
+                Товары ({totalItems})
               </h2>
               <button
                 onClick={clearCart}
                 className="flex items-center text-gray-500 hover:text-red-500 transition-colors"
               >
                 <Trash2 className="h-4 w-4 mr-1" />
-                Clear Cart
+                Очистить корзину
               </button>
             </div>
             
@@ -56,51 +56,44 @@ const CartPage: React.FC = () => {
         
         <div>
           <div className="bg-white rounded-lg shadow-md p-6 sticky top-20">
-            <h2 className="font-serif text-xl font-semibold text-gray-800 mb-6">Order Summary</h2>
+            <h2 className="font-serif text-xl font-semibold text-gray-800 mb-6">Оформление заказа</h2>
             
             <div className="space-y-4">
               <div className="flex justify-between text-gray-600">
-                <span>Subtotal</span>
-                <span>${totalPrice.toFixed(2)}</span>
+                <span>Стоимость</span>
+                <span>{totalPrice.toFixed(2)}</span>
               </div>
               <div className="flex justify-between text-gray-600">
-                <span>Shipping</span>
-                <span>{totalPrice > 35 ? 'Free' : '$4.99'}</span>
-              </div>
-              <div className="flex justify-between text-gray-600">
-                <span>Tax</span>
-                <span>${(totalPrice * 0.08).toFixed(2)}</span>
+                <span>Доставка</span>
+                <span>{totalPrice > 2999 ? 'Бесплатно' : 
+                  <div className='flex'>499.99</div>
+                }</span>
               </div>
               
               <div className="border-t border-gray-200 pt-4 mt-4">
                 <div className="flex justify-between font-bold text-lg">
-                  <span>Total</span>
-                  <span>${(totalPrice + (totalPrice > 35 ? 0 : 4.99) + (totalPrice * 0.08)).toFixed(2)}</span>
+                  <span>Итого</span>
+                  <span>{(totalPrice + (totalPrice >= 2999 ? 0 : 499.99)).toFixed(2)}</span>
                 </div>
-                <p className="text-gray-500 text-sm mt-1">
-                  {totalPrice > 35 ? 'Free shipping applied' : `Add ${(35 - totalPrice).toFixed(2)} more for free shipping`}
+                <p className="text-gray-700 text-sm mt-1">
+                  {totalPrice >= 2999 ? '' : `Добавьте еще товаров на ${(2999 - totalPrice).toFixed()} для бесплатной доставки`}
                 </p>
               </div>
             </div>
             
-            <button
-              className="mt-6 w-full bg-amber-500 hover:bg-amber-600 text-white py-3 px-6 rounded-full font-medium transition-colors flex items-center justify-center"
-            >
+            <button className="mt-6 w-full bg-amber-500 hover:bg-amber-600 text-white py-3 px-6 rounded-full font-medium transition-colors flex items-center justify-center">
               <CreditCard className="mr-2 h-5 w-5" />
-              Proceed to Checkout
+              Перейти к оплате
             </button>
             
-            <Link 
-              to="/books"
-              className="mt-4 w-full inline-flex items-center justify-center text-gray-600 hover:text-amber-500 py-2 transition-colors"
-            >
-              Continue Shopping
+            <Link to="/books" className="mt-4 w-full inline-flex items-center justify-center text-gray-600 hover:text-amber-500 py-2 transition-colors">
+              Продолжить покупки
             </Link>
           </div>
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default CartPage;
+export default CartPage

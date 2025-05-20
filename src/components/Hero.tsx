@@ -1,5 +1,6 @@
 import React from 'react'
 import { ChevronRight, BookOpen, RussianRuble, BadgePercent, MessageCircleQuestion, Truck, Undo2 } from 'lucide-react'
+import { Link } from 'react-router-dom'
 
 const Hero: React.FC = () => {
   return (
@@ -54,12 +55,9 @@ const Hero: React.FC = () => {
               </div>
               <div className="mt-4 flex justify-between items-center">
                 <span className="text-lg font-bold text-gray-800 flex">999 <RussianRuble className='text-gray-600' /></span>
-                <a
-                  href="/story-stream/books/2"
-                  className="bg-amber-500 hover:bg-amber-600 text-white font-bold py-2 px-4 rounded-full text-sm transition-colors"
-                >
-                  Подробности
-                </a>
+                <Link to="/books/2" className="bg-amber-500 hover:bg-amber-600 text-white font-bold py-2 px-4 rounded-full text-sm transition-colors">
+                  Подробнее
+                </Link>
               </div>
             </div>
           </div>
