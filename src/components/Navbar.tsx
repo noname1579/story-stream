@@ -60,29 +60,27 @@ const Navbar: React.FC<NavbarProps> = ({ onSearchSubmit }) => {
               </form>
             </div>
 
-            <a href="/" className="text-gray-700 hover:text-amber-500 px-3 py-2 rounded-md font-medium transition-colors">
-              Главная
-            </a>
+            <Link to='/' className="text-gray-700 hover:text-amber-500 px-3 py-2 rounded-md font-medium transition-colors">Главная</Link>
             <Link to='/books' className="text-gray-700 hover:text-amber-500 px-3 py-2 rounded-md font-medium transition-colors">Каталог</Link>
-            <a href="/story-stream/wishlist" className="text-gray-700 hover:text-amber-500 px-3 py-2 relative">
+            <Link to='/wishlist' className="text-gray-700 hover:text-amber-500 px-3 py-2 relative">
               <Heart className="h-6 w-6" />
-            </a>
-            <a href="/story-stream/cart" className="text-gray-700 hover:text-amber-500 px-3 py-2 relative">
+            </Link>
+             <Link to='/cart' className="text-gray-700 hover:text-amber-500 px-3 py-2 relative">
               <ShoppingCart className="h-6 w-6" />
               {totalItems > 0 && (
                 <span className="absolute top-0 right-0 bg-amber-500 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
                   {totalItems}
                 </span>
               )}
-            </a>
+            </Link>
             {isAuthenticated ? (
               <div className="relative group">
                 <button className="text-gray-700 hover:text-amber-500 px-3 py-2">
                   <User className="h-6 w-6" />
                 </button>
                 <div className="absolute right-0 w-48 mt-2 bg-white rounded-md shadow-lg hidden group-hover:block">
-                  <a href="/story-stream/profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-amber-50">Профиль</a>
-                  <a href="/story-stream/orders" className="block px-4 py-2 text-sm text-gray-700 hover:bg-amber-50">Заказы</a>
+                  <Link to='/profile' className="block px-4 py-2 text-sm text-gray-700 hover:bg-amber-50">Профиль</Link>
+                  <Link to='/orders' className="block px-4 py-2 text-sm text-gray-700 hover:bg-amber-50">Заказы</Link>
                   <button
                     onClick={logout}
                     className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-amber-50"
@@ -92,9 +90,9 @@ const Navbar: React.FC<NavbarProps> = ({ onSearchSubmit }) => {
                 </div>
               </div>
             ) : (
-              <a href="/story-stream/login" className="text-gray-700 hover:text-amber-500 px-3 py-2">
+              <Link to="/login" className="text-gray-700 hover:text-amber-500 px-3 py-2">
                 <User className="h-6 w-6" />
-              </a>
+              </Link>
             )}
           </div>
 
@@ -128,26 +126,26 @@ const Navbar: React.FC<NavbarProps> = ({ onSearchSubmit }) => {
                 <Search className="h-5 w-5 text-gray-400" />
               </button>
             </form>
-            <a href="/story-stream/" className="text-gray-700 hover:text-amber-500 block px-3 py-2 rounded-md font-medium">
+            <Link to="/" className="text-gray-700 hover:text-amber-500 block px-3 py-2 rounded-md font-medium">
               Главная
-            </a>
-            <a href="/story-stream/books" className="text-gray-700 hover:text-amber-500 block px-3 py-2 rounded-md font-medium">
+            </Link>
+             <Link to="/books" className="text-gray-700 hover:text-amber-500 block px-3 py-2 rounded-md font-medium">
               Каталог
-            </a>
-            <a href="/story-stream/wishlist" className="text-gray-700 hover:text-amber-500 block px-3 py-2 rounded-md font-medium">
+            </Link>
+             <Link to="/wishlist" className="text-gray-700 hover:text-amber-500 block px-3 py-2 rounded-md font-medium">
               Вишлист
-            </a>
-            <a href="/story-stream/cart" className="text-gray-700 hover:text-amber-500 block px-3 py-2 rounded-md font-medium">
+            </Link>
+            <Link to="/cart" className="text-gray-700 hover:text-amber-500 block px-3 py-2 rounded-md font-medium">
               Корзина ({totalItems})
-            </a>
+            </Link>
             {isAuthenticated ? (
               <>
-                <a href="/story-stream/profile" className="text-gray-700 hover:text-amber-500 block px-3 py-2 rounded-md font-medium">
+                <Link to="/profile" className="text-gray-700 hover:text-amber-500 block px-3 py-2 rounded-md font-medium">
                   Профиль
-                </a>
-                <a href="/orders" className="text-gray-700 hover:text-amber-500 block px-3 py-2 rounded-md font-medium">
+                </Link>
+                <Link to="/orders" className="text-gray-700 hover:text-amber-500 block px-3 py-2 rounded-md font-medium">
                   Заказы
-                </a>
+                </Link>
                 <button
                   onClick={logout}
                   className="w-full text-left text-gray-700 hover:text-amber-500 block px-3 py-2 rounded-md font-medium"
@@ -156,9 +154,9 @@ const Navbar: React.FC<NavbarProps> = ({ onSearchSubmit }) => {
                 </button>
               </>
             ) : (
-              <a href="/story-stream/login" className="text-gray-700 hover:text-amber-500 block px-3 py-2 rounded-md font-medium">
+              <Link to="/login" className="text-gray-700 hover:text-amber-500 block px-3 py-2 rounded-md font-medium">
                 Войти
-              </a>
+              </Link>
             )}
           </div>
         </div>
