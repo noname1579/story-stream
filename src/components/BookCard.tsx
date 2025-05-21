@@ -4,7 +4,6 @@ import { Heart, ShoppingCart } from 'lucide-react'
 import { useCart } from '../contexts/CartContext'
 import { useWishlist } from '../contexts/WishlistContext'
 import { Link } from 'react-router-dom'
-import { books } from '../data/books'
 
 interface BookCardProps {
   book: Book;
@@ -16,7 +15,7 @@ const BookCard: React.FC<BookCardProps> = ({ book }) => {
   
   const handleAddToCart = () => {
     addToCart(book);
-  };
+  }
   
   const handleWishlistToggle = () => {
     if (isInWishlist(book.id)) {
@@ -28,17 +27,19 @@ const BookCard: React.FC<BookCardProps> = ({ book }) => {
 
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105 hover:shadow-lg h-full flex flex-col">
-      <Link to={`/books/${book.id}`} className="relative h-64 overflow-hidden">
-        <img 
-          src={book.coverImage} 
-          alt={book.title} 
-          className="w-full h-full object-cover object-center"
-        />
-        {book.isNew && (
-          <div className="absolute top-2 right-2 bg-amber-500 text-white text-xs uppercase font-bold rounded-full px-3 py-1 shadow-md">
-            Новая
-          </div>
-        )}
+      <div className="relative h-64 overflow-hidden">
+        <Link to={`/books/${book.id}`}>
+          <img 
+            src={book.coverImage} 
+            alt={book.title} 
+            className="w-full h-full object-cover object-center"
+          />
+          {book.isNew && (
+            <div className="absolute top-2 right-2 bg-amber-500 text-white text-xs uppercase font-bold rounded-full px-3 py-1 shadow-md">
+              Новинка
+            </div>
+          )}
+        </Link>
         <button 
           onClick={handleWishlistToggle}
           className="absolute top-2 left-2 p-1 rounded-full bg-white/70 backdrop-blur-sm shadow-sm hover:bg-white transition-colors"
@@ -47,7 +48,7 @@ const BookCard: React.FC<BookCardProps> = ({ book }) => {
             className={`h-5 w-5 ${isInWishlist(book.id) ? 'fill-rose-500 text-rose-500' : 'text-gray-700'}`} 
           />
         </button>
-      </Link>
+      </div>
       
       <div className="p-2 flex-1 flex flex-col">
         <div className="flex-1">

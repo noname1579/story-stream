@@ -16,7 +16,7 @@ const CartPage: React.FC = () => {
           <p className="text-gray-600 mb-6">Похоже вы еще ничего не добавили в корзину</p>
           <Link 
             to="/books"
-            className="flex text-md items-center bg-amber-500 text-white hover:bg-amber-600 rounded-full px-3 py-3 font-medium transition-colors"
+            className="flex text-md items-center bg-amber-500 text-white hover:bg-amber-600 rounded-full px-3 py-3 font-medium transition-colors justify-center"
           >
             Продолжить покупки
             <ArrowRight className="ml-2 h-5 w-5" />

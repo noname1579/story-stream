@@ -36,10 +36,10 @@ const Navbar: React.FC<NavbarProps> = ({ onSearchSubmit }) => {
     <nav className="bg-white shadow-md sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
-          <div className="flex items-center">
+          <Link to='/' className="flex items-center">
             <BookOpen className="h-8 w-8 text-amber-500" />
             <span className="ml-2 text-xl font-serif font-semibold text-gray-800">StoryStream</span>
-          </div>
+          </Link>
 
           <div className="hidden md:flex items-center space-x-4">
             <div className="relative">

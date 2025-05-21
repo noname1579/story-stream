@@ -1,7 +1,7 @@
 import React from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { books } from '../data/books'
-import { Star, ShoppingCart, Heart, Share2, ArrowLeft } from 'lucide-react'
+import { Star, ShoppingCart, Heart, Share2, ArrowLeft, RussianRuble } from 'lucide-react'
 import { useCart } from '../contexts/CartContext'
 import { useWishlist } from '../contexts/WishlistContext'
 
@@ -89,7 +89,7 @@ const BookDetailsPage: React.FC = () => {
           </div>
           
           <div className="mb-6">
-            <span className="text-3xl font-bold text-gray-800">${book.price.toFixed(2)}</span>
+            <span className=" text-xl md:text-3xl font-bold text-gray-800 flex items-center">{book.price.toFixed(2)} <RussianRuble size={26} /></span>
           </div>
           
           <p className="text-gray-700 leading-relaxed mb-8">{book.description}</p>
@@ -97,9 +97,9 @@ const BookDetailsPage: React.FC = () => {
           <div className="flex space-x-4 mb-8">
             <button
               onClick={handleAddToCart}
-              className="flex-1 bg-amber-500 hover:bg-amber-600 text-white py-3 px-6 rounded-full font-medium transition-colors flex items-center justify-center"
+              className="flex-1 bg-amber-500 hover:bg-amber-600 text-white py-2 px-4 rounded-full font-medium transition-colors flex items-center justify-center"
             >
-              <ShoppingCart className="mr-2 h-5 w-5" />
+              <ShoppingCart className="mr-2 h-10 w-10" />
               Добавить в корзину
             </button>
             

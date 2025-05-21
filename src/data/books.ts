@@ -24,7 +24,7 @@ export const books: Book[] = [
     genre: ['Фантастика', 'Социальная драма'],
     rating: 4.8,
     releaseDate: '1949-06-08',
-    isNew: false,
+    isNew: true,
     isFeatured: true
   },
   {

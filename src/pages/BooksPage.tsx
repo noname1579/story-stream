@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { Book } from '../types'
 import BookGrid from '../components/BookGrid';
-import { books, searchBooks } from '../data/books'
+import { searchBooks } from '../data/books'
 import { Filter, SortAsc, SortDesc } from 'lucide-react'
+import axios from 'axios'
+import { TailChase } from 'ldrs/react'
+import 'ldrs/react/TailChase.css'
+
 
 interface BooksPageProps {
   searchQuery: string
@@ -14,6 +18,23 @@ const BooksPage: React.FC<BooksPageProps> = ({ searchQuery }) => {
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc')
   const [sortBy, setSortBy] = useState<'title' | 'price'>('title')
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false)
+  const [books, setBooks] = useState<Book[]>([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://localhost:3000/books')
+        setBooks(response.data)
+      } catch (err) {
+        console.log(err)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchData()
+  }, [])
 
   const allGenres = Array.from(
     new Set(
@@ -45,11 +66,23 @@ const BooksPage: React.FC<BooksPageProps> = ({ searchQuery }) => {
     })
     
     setFilteredBooks(result);
-  }, [searchQuery, selectedGenre, sortOrder, sortBy])
+  }, [books, searchQuery, selectedGenre, sortOrder, sortBy])
 
   const toggleSortOrder = () => {
     setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')
-  };
+  }
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <TailChase
+          size="40"
+          speed="1.75"
+          color="black" 
+        />
+      </div>
+    )
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -250,7 +283,7 @@ const BooksPage: React.FC<BooksPageProps> = ({ searchQuery }) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default BooksPage;
+export default BooksPage
