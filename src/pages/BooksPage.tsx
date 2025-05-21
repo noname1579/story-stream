@@ -24,7 +24,7 @@ const BooksPage: React.FC<BooksPageProps> = ({ searchQuery }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/books')
+        const response = await axios.get('https://story-stream-server.vercel.app/books')
         setBooks(response.data)
       } catch (err) {
         console.log(err)
