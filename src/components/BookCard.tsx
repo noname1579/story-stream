@@ -3,6 +3,8 @@ import { Book } from '../types'
 import { Heart, ShoppingCart } from 'lucide-react'
 import { useCart } from '../contexts/CartContext'
 import { useWishlist } from '../contexts/WishlistContext'
+import { Link } from 'react-router-dom'
+import { books } from '../data/books'
 
 interface BookCardProps {
   book: Book;
@@ -26,7 +28,7 @@ const BookCard: React.FC<BookCardProps> = ({ book }) => {
 
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden transition-transform duration-300 hover:scale-105 hover:shadow-lg h-full flex flex-col">
-      <div className="relative h-64 overflow-hidden">
+      <Link to={`/books/${book.id}`} className="relative h-64 overflow-hidden">
         <img 
           src={book.coverImage} 
           alt={book.title} 
@@ -45,7 +47,7 @@ const BookCard: React.FC<BookCardProps> = ({ book }) => {
             className={`h-5 w-5 ${isInWishlist(book.id) ? 'fill-rose-500 text-rose-500' : 'text-gray-700'}`} 
           />
         </button>
-      </div>
+      </Link>
       
       <div className="p-2 flex-1 flex flex-col">
         <div className="flex-1">

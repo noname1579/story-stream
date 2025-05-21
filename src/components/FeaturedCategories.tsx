@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const categories = [
   { id: 1, name: 'Художественная литература', icon: '📚', color: 'bg-amber-500' },
@@ -24,9 +25,9 @@ const FeaturedCategories: React.FC = () => {
         
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
           {categories.map((category) => (
-            <a 
+            <Link 
               key={category.id}
-              href={`/books?genre=${encodeURIComponent(category.name)}`}
+              to={`/books?genre=${encodeURIComponent(category.name)}`}
               className="flex flex-col items-center p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow"
             >
               <div className={`${category.color} text-white p-3 rounded-full mb-4`}>
@@ -35,7 +36,7 @@ const FeaturedCategories: React.FC = () => {
                 </span>
               </div>
               <h3 className="font-serif font-medium text-gray-800">{category.name}</h3>
-            </a>
+            </Link>
           ))}
         </div>
       </div>

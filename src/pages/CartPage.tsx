@@ -16,7 +16,7 @@ const CartPage: React.FC = () => {
           <p className="text-gray-600 mb-6">Похоже вы еще ничего не добавили в корзину</p>
           <Link 
             to="/books"
-            className="inline-flex items-center bg-amber-500 text-white hover:bg-amber-600 rounded-full px-6 py-3 font-medium transition-colors"
+            className="flex text-md items-center bg-amber-500 text-white hover:bg-amber-600 rounded-full px-3 py-3 font-medium transition-colors"
           >
             Продолжить покупки
             <ArrowRight className="ml-2 h-5 w-5" />
@@ -39,9 +39,9 @@ const CartPage: React.FC = () => {
               </h2>
               <button
                 onClick={clearCart}
-                className="flex items-center text-gray-500 hover:text-red-500 transition-colors"
+                className="flex items-center ml-16 md:ml-4 text-gray-500 hover:text-red-500 transition-colors"
               >
-                <Trash2 className="h-4 w-4 mr-1" />
+                <Trash2 className="h-8 w-8" />
                 Очистить корзину
               </button>
             </div>
@@ -54,29 +54,27 @@ const CartPage: React.FC = () => {
           </div>
         </div>
         
-        <div>
-          <div className="bg-white rounded-lg shadow-md p-6 sticky top-20">
+        <div className="lg:sticky lg:top-20">
+          <div className="bg-white rounded-lg shadow-md p-6">
             <h2 className="font-serif text-xl font-semibold text-gray-800 mb-6">Оформление заказа</h2>
             
             <div className="space-y-4">
               <div className="flex justify-between text-gray-600">
                 <span>Стоимость</span>
-                <span>{totalPrice.toFixed(2)}</span>
+                <span>{totalPrice.toFixed(2)} ₽</span>
               </div>
               <div className="flex justify-between text-gray-600">
                 <span>Доставка</span>
-                <span>{totalPrice > 2999 ? 'Бесплатно' : 
-                  <div className='flex'>499.99</div>
-                }</span>
+                <span>{totalPrice > 2999 ? 'Бесплатно' : '499.99 ₽'}</span>
               </div>
               
               <div className="border-t border-gray-200 pt-4 mt-4">
                 <div className="flex justify-between font-bold text-lg">
                   <span>Итого</span>
-                  <span>{(totalPrice + (totalPrice >= 2999 ? 0 : 499.99)).toFixed(2)}</span>
+                  <span>{(totalPrice + (totalPrice >= 2999 ? 0 : 499.99)).toFixed(2)} ₽</span>
                 </div>
                 <p className="text-gray-700 text-sm mt-1">
-                  {totalPrice >= 2999 ? '' : `Добавьте еще товаров на ${(2999 - totalPrice).toFixed()} для бесплатной доставки`}
+                  {totalPrice >= 2999 ? '' : `Добавьте еще товаров на ${(2999 - totalPrice).toFixed()} ₽ для бесплатной доставки`}
                 </p>
               </div>
             </div>

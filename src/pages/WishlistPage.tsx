@@ -37,11 +37,11 @@ const WishlistPage: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="flex justify-between items-center mb-8">
-        <h1 className="font-serif text-3xl font-bold text-gray-800">Твой вишлист</h1>
+        <h1 className="font-serif text-xl md:text-3xl font-bold text-gray-800">Твой вишлист</h1>
         
         <button
           onClick={handleAddAllToCart}
-          className="bg-amber-500 hover:bg-amber-600 text-white py-2 px-4 rounded-full text-sm transition-colors"
+          className="bg-amber-500 hover:bg-amber-600 text-white py-2 px-3 rounded-full text-sm transition-colors"
         >
           Добавить все товары в корзину
         </button>

@@ -66,7 +66,7 @@ const BookDetailsPage: React.FC = () => {
         
         <div>
           <h1 className="font-serif text-3xl font-bold text-gray-800 mb-2">{book.title}</h1>
-          <p className="text-xl text-gray-600 mb-4">by {book.author}</p>
+          <p className="text-xl text-gray-600 mb-4">{book.author}</p>
           
           <div className="flex items-center mb-4">
             <div className="flex">
@@ -77,7 +77,7 @@ const BookDetailsPage: React.FC = () => {
                 />
               ))}
             </div>
-            <span className="ml-2 text-gray-600">{book.rating} out of 5</span>
+            <span className="ml-2 text-gray-600">{book.rating} из 5</span>
           </div>
           
           <div className="flex flex-wrap gap-2 mb-6">

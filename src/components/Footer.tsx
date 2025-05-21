@@ -57,7 +57,7 @@ const Footer: React.FC = () => {
         <div className="border-t border-gray-700 mt-10 pt-6 flex flex-col md:flex-row justify-between items-center">
           <p className="text-gray-400 text-sm">© 2025 StoryStream</p>
           <div className="mt-4 md:mt-0">
-            <ul className="flex space-x-4">
+            <ul className="block">
               <li><a href="#" className="text-gray-400 hover:text-amber-400 transition-colors">Политика конфиденциальности</a></li>
               <li><a href="#" className="text-gray-400 hover:text-amber-400 transition-colors">Условия обслуживания</a></li>
               <li><a href="#" className="text-gray-400 hover:text-amber-400 transition-colors">Доставка</a></li>

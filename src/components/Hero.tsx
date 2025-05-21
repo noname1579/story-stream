@@ -16,13 +16,13 @@ const Hero: React.FC = () => {
               От бестселлеров до скрытых жемчужин — найдите идеальные истории, которые обогатят ваш разум и вдохновят ваше воображение
             </p>
             <div className="flex flex-wrap gap-4">
-              <a href="/story-stream/books" className="inline-flex items-center bg-white text-amber-600 hover:bg-gray-100 rounded-full px-4 py-3 font-medium transition-colors">
+              <Link to="/books" className="inline-flex items-center bg-white text-amber-600 hover:bg-gray-100 rounded-full px-4 py-3 font-medium transition-colors">
                 Посмотреть все книги
                 <ChevronRight className="ml-2 h-5 w-5" />
-              </a>
-              <a href="/story-stream/featured" className="inline-flex items-center bg-transparent text-white border border-white hover:bg-white/10 rounded-full px-14 md:px-14 py-3 font-medium transition-colors">
+              </Link>
+              <Link to="/books/1" className="inline-flex items-center bg-transparent text-white border border-white hover:bg-white/10 rounded-full px-14 md:px-14 py-3 font-medium transition-colors">
                 Популярные
-              </a>
+              </Link>
             </div>
           </div>
           
@@ -43,6 +43,7 @@ const Hero: React.FC = () => {
                   className="w-24 h-36 object-cover rounded shadow"
                 />
                 <div>
+                  {/* поменять на настоящие данные + сделать ежедневный выбор книги со скидкой*/}
                   <h4 className="font-serif text-gray-800 text-lg font-medium mb-1">Преступление и наказание</h4>
                   <p className="text-gray-600 text-md mb-2">Федор Достоевский</p>
                   <div className="flex text-amber-500 mb-2">

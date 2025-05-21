@@ -113,7 +113,7 @@ const LoginPage: React.FC = () => {
                   id="password"
                   name="password"
                   type="password"
-                  autoComplete={isLogin ? "current-password" : "new-password"}
+                  autoComplete={isLogin ? "Текущий пароль" : "Новый пароль"}
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -155,7 +155,7 @@ const LoginPage: React.FC = () => {
                   <span>Процесс...</span>
                 ) : (
                   <>
-                    <span>{isLogin ? 'Sign in' : 'Sign up'}</span>
+                    <span>{isLogin ? 'Войти' : 'Зарегистрироваться'}</span>
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </>
                 )}

@@ -30,9 +30,6 @@ const Navbar: React.FC<NavbarProps> = ({ onSearchSubmit }) => {
     else {
       document.body.style.overflow = ''
     }
-    return () => {
-      document.body.style.overflow = ''
-    }
   }, [isMobileMenuOpen])
 
   return (
@@ -126,16 +123,16 @@ const Navbar: React.FC<NavbarProps> = ({ onSearchSubmit }) => {
                 <Search className="h-5 w-5 text-gray-400" />
               </button>
             </form>
-            <Link to="/" className="text-gray-700 hover:text-amber-500 block px-3 py-2 rounded-md font-medium">
+            <Link to="/" onClick={() => {setIsMobileMenuOpen(!isMobileMenuOpen)}} className="text-gray-700 hover:text-amber-500 block px-3 py-2 rounded-md font-medium">
               Главная
             </Link>
-             <Link to="/books" className="text-gray-700 hover:text-amber-500 block px-3 py-2 rounded-md font-medium">
+             <Link to="/books" onClick={() => {setIsMobileMenuOpen(!isMobileMenuOpen)}} className="text-gray-700 hover:text-amber-500 block px-3 py-2 rounded-md font-medium">
               Каталог
             </Link>
-             <Link to="/wishlist" className="text-gray-700 hover:text-amber-500 block px-3 py-2 rounded-md font-medium">
+             <Link to="/wishlist" onClick={() => {setIsMobileMenuOpen(!isMobileMenuOpen)}} className="text-gray-700 hover:text-amber-500 block px-3 py-2 rounded-md font-medium">
               Вишлист
             </Link>
-            <Link to="/cart" className="text-gray-700 hover:text-amber-500 block px-3 py-2 rounded-md font-medium">
+            <Link to="/cart" onClick={() => {setIsMobileMenuOpen(!isMobileMenuOpen)}} className="text-gray-700 hover:text-amber-500 block px-3 py-2 rounded-md font-medium">
               Корзина ({totalItems})
             </Link>
             {isAuthenticated ? (
@@ -154,7 +151,7 @@ const Navbar: React.FC<NavbarProps> = ({ onSearchSubmit }) => {
                 </button>
               </>
             ) : (
-              <Link to="/login" className="text-gray-700 hover:text-amber-500 block px-3 py-2 rounded-md font-medium">
+              <Link to="/login" onClick={() => {setIsMobileMenuOpen(!isMobileMenuOpen)}} className="text-gray-700 hover:text-amber-500 block px-3 py-2 rounded-md font-medium">
                 Войти
               </Link>
             )}

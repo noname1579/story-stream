@@ -54,7 +54,7 @@ const BooksPage: React.FC<BooksPageProps> = ({ searchQuery }) => {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="flex justify-between items-center mb-8">
-        <h1 className="font-serif text-3xl font-bold text-gray-800">
+        <h1 className="font-serif text-xl md:text-3xl font-bold text-gray-800">
           {searchQuery ? `Результаты поиск по запросу: "${searchQuery}"` : selectedGenre ? `Книги в жанре ${selectedGenre}` : 'Все книги'}
         </h1>
         
