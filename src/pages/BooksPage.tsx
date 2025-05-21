@@ -1,52 +1,27 @@
-import React, { useState, useEffect } from 'react'
-import { Book } from '../types'
+import React, { useState } from 'react'
 import BookGrid from '../components/BookGrid';
-import { searchBooks } from '../data/books'
+import { useBooks } from '../data/books'
 import { Filter, SortAsc, SortDesc } from 'lucide-react'
-import axios from 'axios'
 import { TailChase } from 'ldrs/react'
 import 'ldrs/react/TailChase.css'
-
 
 interface BooksPageProps {
   searchQuery: string
 }
 
 const BooksPage: React.FC<BooksPageProps> = ({ searchQuery }) => {
-  const [filteredBooks, setFilteredBooks] = useState<Book[]>([])
   const [selectedGenre, setSelectedGenre] = useState<string>('')
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc')
   const [sortBy, setSortBy] = useState<'title' | 'price'>('title')
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false)
-  const [books, setBooks] = useState<Book[]>([])
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get('https://story-stream-server.vercel.app/books')
-        setBooks(response.data)
-      } catch (err) {
-        console.log(err)
-      } finally {
-        setLoading(false)
-      }
-    }
-
-    fetchData()
-  }, [])
-
-  const allGenres = Array.from(
-    new Set(
-      books.flatMap(book => book.genre)
-    )
-  ).sort();
-
-  useEffect(() => {
+  
+  const { books, loading, searchBooks } = useBooks()
+  
+  const filteredBooks = React.useMemo(() => {
     let result = [...books]
     
     if (searchQuery) {
-      result = searchBooks(searchQuery);
+      result = searchBooks(searchQuery)
     }
     
     if (selectedGenre) {
@@ -61,12 +36,16 @@ const BooksPage: React.FC<BooksPageProps> = ({ searchQuery }) => {
       } else {
         return sortOrder === 'asc'
           ? a.price - b.price
-          : b.price - a.price;
+          : b.price - a.price
       }
     })
     
-    setFilteredBooks(result);
-  }, [books, searchQuery, selectedGenre, sortOrder, sortBy])
+    return result
+  }, [books, searchQuery, selectedGenre, sortOrder, sortBy, searchBooks])
+
+  const allGenres = Array.from(
+    new Set(books.flatMap(book => book.genre))
+  ).sort()
 
   const toggleSortOrder = () => {
     setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')

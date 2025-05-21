@@ -1,25 +1,62 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
-import { books } from '../data/books'
 import { Star, ShoppingCart, Heart, Share2, ArrowLeft, RussianRuble } from 'lucide-react'
 import { useCart } from '../contexts/CartContext'
 import { useWishlist } from '../contexts/WishlistContext'
+import { Book } from '../types'
+import axios from 'axios'
+import { TailChase } from 'ldrs/react'
 
 const BookDetailsPage: React.FC = () => {
   const { id } = useParams<{ id: string }>()
   const { addToCart } = useCart()
   const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist()
-  
-  const book = books.find(book => book.id === id)
-  
+
+  const [books, setBooks] = useState<Book[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('https://story-stream-server.vercel.app/books')
+        setBooks(response.data)
+      } catch (err) {
+        console.error(err)
+        setError('Не удалось загрузить данные о книгах')
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchData()
+  }, [])
+
+  const book = books.find(book => book.id.toString() === id)
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <TailChase
+          size="40"
+          speed="1.75"
+          color="black" 
+        />
+      </div>
+    )
+  }
+
+  if (error) {
+    return <div className="text-center py-10 text-red-500">{error}</div>
+  }
+
   if (!book) {
     return (
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center">
-        <h2 className="text-2xl font-serif font-bold text-gray-800 mb-4">Книги не найдены</h2>
-        <p className="text-gray-600 mb-6">Книга, которую вы ищете, не существует или была удалена</p>
+      <div className="text-center py-10">
+        <p className="text-lg mb-4">Книга не найдена</p>
         <Link 
           to="/books"
-          className="inline-flex items-center bg-amber-500 text-white hover:bg-amber-600 rounded-full px-6 py-3 font-medium transition-colors"
+          className="inline-flex items-center text-amber-500 hover:text-amber-600 transition-colors"
         >
           <ArrowLeft className="mr-2 h-5 w-5" />
           Вернуться в каталог
@@ -27,7 +64,7 @@ const BookDetailsPage: React.FC = () => {
       </div>
     )
   }
-  
+
   const handleAddToCart = () => {
     addToCart(book)
   }
@@ -59,7 +96,7 @@ const BookDetailsPage: React.FC = () => {
           />
           {book.isNew && (
             <div className="absolute top-4 right-4 bg-amber-500 text-white text-xs uppercase font-bold rounded-full px-3 py-1 shadow-md">
-              New
+              Новинка
             </div>
           )}
         </div>
@@ -89,7 +126,9 @@ const BookDetailsPage: React.FC = () => {
           </div>
           
           <div className="mb-6">
-            <span className=" text-xl md:text-3xl font-bold text-gray-800 flex items-center">{book.price.toFixed(2)} <RussianRuble size={26} /></span>
+            <span className="text-xl md:text-3xl font-bold text-gray-800 flex items-center">
+              {book.price.toFixed(2)} <RussianRuble size={26} />
+            </span>
           </div>
           
           <p className="text-gray-700 leading-relaxed mb-8">{book.description}</p>
@@ -99,7 +138,7 @@ const BookDetailsPage: React.FC = () => {
               onClick={handleAddToCart}
               className="flex-1 bg-amber-500 hover:bg-amber-600 text-white py-2 px-4 rounded-full font-medium transition-colors flex items-center justify-center"
             >
-              <ShoppingCart className="mr-2 h-10 w-10" />
+              <ShoppingCart className="mr-2 h-5 w-5" />
               Добавить в корзину
             </button>
             
@@ -115,7 +154,7 @@ const BookDetailsPage: React.FC = () => {
             
             <button
               className="p-3 rounded-full border border-gray-300 text-gray-600 hover:border-amber-500 hover:text-amber-500 transition-colors"
-              title="Share"
+              title="Поделиться"
             >
               <Share2 className="h-5 w-5" />
             </button>

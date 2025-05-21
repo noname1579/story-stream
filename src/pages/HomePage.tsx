@@ -2,13 +2,18 @@ import Hero from '../components/Hero'
 import BookGrid from '../components/BookGrid'
 import FeaturedCategories from '../components/FeaturedCategories'
 import Testimonials from '../components/Testimonials'
-import { getFeaturedBooks, getNewReleases, searchBooks } from '../data/books'
+import { useBooks } from '../data/books'
+
+
+
 
 interface HomePageProps {
   searchQuery: string
 }
 
 const HomePage: React.FC<HomePageProps> = ({ searchQuery }) => {
+  
+  const { getFeaturedBooks, getNewReleases, searchBooks, loading, error } = useBooks()
   const featuredBooks = getFeaturedBooks()
   const newReleases = getNewReleases()
   const searchResults = searchQuery ? searchBooks(searchQuery) : null
