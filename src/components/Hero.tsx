@@ -1,6 +1,7 @@
 import React from 'react'
 import { ChevronRight, BookOpen, RussianRuble, BadgePercent, MessageCircleQuestion, Truck, Undo2 } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import TypingAnimatedText from './TypingText'
 
 const Hero: React.FC = () => {
   return (
@@ -10,7 +11,7 @@ const Hero: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
           <div className="space-y-6">
             <h1 className="font-serif text-4xl md:text-5xl font-bold">
-              Откройте для себя свою следующую любимую книгу
+              <TypingAnimatedText />
             </h1>
             <p className="text-lg md:text-xl opacity-90 leading-relaxed max-w-lg">
               От бестселлеров до скрытых жемчужин — найдите идеальные истории, которые обогатят ваш разум и вдохновят ваше воображение

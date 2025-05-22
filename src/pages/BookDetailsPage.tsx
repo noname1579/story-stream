@@ -39,7 +39,7 @@ const BookDetailsPage: React.FC = () => {
       <div className="flex justify-center items-center h-screen">
         <TailChase
           size="40"
-          speed="1.75"
+          speed="2"
           color="black" 
         />
       </div>

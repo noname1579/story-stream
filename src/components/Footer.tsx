@@ -30,7 +30,7 @@ const Footer: React.FC = () => {
               <li><Link to="/books?genre=Fiction" className="text-gray-300 hover:text-amber-400 transition-colors">Художественная литература</Link></li>
               <li><Link to="/books?genre=Non-Fiction" className="text-gray-300 hover:text-amber-400 transition-colors">Научно-популярная литература</Link></li>
               <li><Link to="/books?genre=Self-Help" className="text-gray-300 hover:text-amber-400 transition-colors">Психология</Link></li>
-              <li><Link to="/books?genre=Science Fiction" className="text-gray-300 hover:text-amber-400 transition-colors">Научная фантастика</Link></li>
+              <li><Link to="/books?genre=Science-Fiction" className="text-gray-300 hover:text-amber-400 transition-colors">Научная фантастика</Link></li>
               <li><Link to="/books?genre=Romance" className="text-gray-300 hover:text-amber-400 transition-colors">Роман</Link></li>
             </ul>
           </div>

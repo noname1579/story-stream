@@ -3,6 +3,7 @@ import BookGrid from '../components/BookGrid'
 import FeaturedCategories from '../components/FeaturedCategories'
 import Testimonials from '../components/Testimonials'
 import { useBooks } from '../data/books'
+import { TailChase } from 'ldrs/react'
 
 
 
@@ -13,10 +14,22 @@ interface HomePageProps {
 
 const HomePage: React.FC<HomePageProps> = ({ searchQuery }) => {
   
-  const { getFeaturedBooks, getNewReleases, searchBooks, loading, error } = useBooks()
+  const { getFeaturedBooks, getNewReleases, searchBooks, loading } = useBooks()
   const featuredBooks = getFeaturedBooks()
   const newReleases = getNewReleases()
   const searchResults = searchQuery ? searchBooks(searchQuery) : null
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <TailChase
+          size="40"
+          speed="2"
+          color="black" 
+        />
+      </div>
+    )
+  }
 
   return (
     <div>
