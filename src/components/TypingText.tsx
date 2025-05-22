@@ -3,14 +3,14 @@ import { useEffect, useState } from "react"
 
 function TypingText({
   words = ["Откройте для себя свою следующую любимую книгу"],
-  typingSpeed = 150,
+  typingSpeed = 80,
   deleteSpeed = 9999999,
-  delayBetweenWords = 1000,
+  delayBetweenWords = 100,
 }: {
   words?: string[];
-  typingSpeed?: number;
-  deleteSpeed?: number;
-  delayBetweenWords?: number;
+  typingSpeed?: number
+  deleteSpeed?: number
+  delayBetweenWords?: number
 }) {
   const [currentWordIndex, setCurrentWordIndex] = useState(0)
   const [currentText, setCurrentText] = useState("")
