@@ -1,33 +1,46 @@
-import React, { useState } from 'react'
-import { useAuth } from '../contexts/AuthContext'
-import { BookOpen, Mail, Lock, User, ArrowRight } from 'lucide-react'
+import React, { useState } from 'react';
+import { BookOpen, Mail, Lock, User, ArrowRight } from 'lucide-react';
 
 const LoginPage: React.FC = () => {
-  const { login, signup } = useAuth()
   const [isLogin, setIsLogin] = useState(true)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [name, setName] = useState('')
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
-
+  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
     setLoading(true)
-    
+
     try {
-      if (isLogin) {
-        await login(email, password)
-      } else {
-        await signup(name, email, password)
+      const response = await fetch(`https://story-stream-server.vercel.app/${isLogin ? 'login' : 'register'}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          password,
+        }),
+      })
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Ошибка аутентификации :/')
       }
-    } catch (err) {
-      setError('Ошибка аутентификации :/')
+
+      console.log('Успешно:', data);
+
+    } catch (error) {
+      console.error(error)
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center sm:px-6 lg:px-8">
@@ -39,7 +52,7 @@ const LoginPage: React.FC = () => {
           {isLogin ? 'Войти в аккаунт' : 'Создать аккаунт'}
         </h2>
         <p className="mt-2 text-center text-gray-600 max-w">
-         {isLogin ? "Введите свои данные ниже, чтобы войти в аккаунт" : "Присоединяйтесь к нам, чтобы начать знакомство с нашей коллекцией книг"}
+          {isLogin ? "Введите свои данные ниже, чтобы войти в аккаунт" : "Присоединяйтесь к нам, чтобы начать знакомство с нашей коллекцией книг"}
         </p>
       </div>
 
@@ -63,7 +76,7 @@ const LoginPage: React.FC = () => {
                 </label>
                 <div className="mt-1 relative rounded-md shadow-sm">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <User className="h-5 w-5 text-gray-400" />
+                    <User  className="h-5 w-5 text-gray-400" />
                   </div>
                   <input
                     id="name"
@@ -185,7 +198,7 @@ const LoginPage: React.FC = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default LoginPage
