@@ -1,42 +1,30 @@
-import React, { useState } from 'react';
-import { BookOpen, Mail, Lock, User, ArrowRight } from 'lucide-react';
+import React, { useState } from 'react'
+import { BookOpen, Mail, Lock, User, ArrowRight } from 'lucide-react'
+import { useAuth } from '../contexts/AuthContext'
 
 const LoginPage: React.FC = () => {
-  const [isLogin, setIsLogin] = useState(true)
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [name, setName] = useState('')
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState('')
-  
+  const { login, signup } = useAuth(); // Получите функции из контекста
+  const [isLogin, setIsLogin] = useState(true);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [name, setName] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError('')
-    setLoading(true)
+    e.preventDefault();
+    setError('');
+    setLoading(true);
 
     try {
-      const response = await fetch(`https://story-stream-server.vercel.app/${isLogin ? 'login' : 'register'}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name,
-          email,
-          password,
-        }),
-      })
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || 'Ошибка аутентификации :/')
+      if (isLogin) {
+        await login(email, password); // Вход
+      } else {
+        await signup(name, email, password); // Регистрация
       }
-
-      console.log('Успешно:', data);
-
+      console.log('Успешно:', { email, name });
     } catch (error) {
-      console.error(error)
+      console.error('Ошибка:', error);
     } finally {
       setLoading(false);
     }
@@ -201,4 +189,4 @@ const LoginPage: React.FC = () => {
   );
 };
 
-export default LoginPage
+export default LoginPage;
