@@ -8,7 +8,7 @@ import BookDetailsPage from './pages/BookDetailsPage';
 import CartPage from './pages/CartPage';
 import WishlistPage from './pages/WishlistPage';
 import LoginPage from './pages/LoginPage';
-import NotFoundPage from './pages/NotFoundPage';
+import NotFoundPage from './pages/404'
 import { CartProvider } from './contexts/CartContext';
 import { WishlistProvider } from './contexts/WishlistContext';
 import AuthInitializer from './store/AuthInitializer';
@@ -51,7 +51,7 @@ function App() {
                   <Route path="/cart" element={<CartPage />} />
                   <Route path="/wishlist" element={<WishlistPage />} />
                   <Route path="/login" element={<LoginPage />} />
-                  <Route path="*" element={<NotFoundPage />} />
+                  <Route path='*' element={<NotFoundPage />}></Route>
                 </Routes>
               </main>
               <Footer />

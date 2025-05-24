@@ -41,7 +41,7 @@ const CartPage: React.FC = () => {
                 onClick={clearCart}
                 className="flex items-center ml-16 md:ml-4 text-gray-500 hover:text-red-500 transition-colors"
               >
-                <Trash2 className="h-8 w-8" />
+                <Trash2 className="md:h-5 md:w-5 h-7 w-7 md:mx-2" />
                 Очистить корзину
               </button>
             </div>
