@@ -1,22 +1,46 @@
-import React, { useState } from 'react';
-import { BookOpen, Mail, Lock, User, ArrowRight } from 'lucide-react';
+import React, { useEffect, useState } from 'react'
+import { BookOpen, Mail, Lock, User, ArrowRight } from 'lucide-react'
 import { useAppDispatch, useAppSelector } from '../store/hooks'
-import { login, register } from '../store/authThunks';
+import { login, register } from '../store/authThunks'
 
 const LoginPage: React.FC = () => {
-  const [isLogin, setIsLogin] = useState(true);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [name, setName] = useState('');
+  const [isLogin, setIsLogin] = useState(true)
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [name, setName] = useState('')
+  const [rememberMe, setRememberMe] = useState(false)
   
-  const dispatch = useAppDispatch();
-  const { isLoading, error } = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch()
+  const { isLoading, error } = useAppSelector((state) => state.auth)
+
+
+  useEffect(() => {
+    const savedEmail = localStorage.getItem('rememberedEmail');
+    const savedPassword = localStorage.getItem('rememberedPassword');
+    
+    if (savedEmail && savedPassword) {
+      setEmail(savedEmail)
+      setPassword(savedPassword)
+      setRememberMe(true)
+    }
+  }, []);
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
     try {
       if (isLogin) {
+        // Если стоит галочка "Запомнить меня" - сохраняем данные
+        if (rememberMe) {
+          localStorage.setItem('rememberedEmail', email);
+          localStorage.setItem('rememberedPassword', password);
+        } else {
+          // Если галочка снята - очищаем сохраненные данные
+          localStorage.removeItem('rememberedEmail');
+          localStorage.removeItem('rememberedPassword');
+        }
+        
         await dispatch(login({ email, password })).unwrap();
       } else {
         await dispatch(register({ name, email, password })).unwrap();
@@ -24,7 +48,7 @@ const LoginPage: React.FC = () => {
     } catch (err) {
       console.error(err);
     }
-  };
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col justify-center sm:px-6 lg:px-8">
@@ -45,7 +69,7 @@ const LoginPage: React.FC = () => {
       <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
           {error && (
-            <div className="bg-red-50 border-l-4 border-red-500 p-4 mb-6">
+            <div className="bg-red-50 border-l-4 border-red-500 p-4 mb-4">
               <p className="text-sm text-red-700">{error}</p>
             </div>
           )}
@@ -91,7 +115,7 @@ const LoginPage: React.FC = () => {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   className="pl-10 block w-full border-gray-300 rounded-md focus:ring-amber-500 focus:border-amber-500"
-                  placeholder="testmail@example.com"
+                  placeholder="example@mail.ru"
                 />
               </div>
             </div>
@@ -108,7 +132,7 @@ const LoginPage: React.FC = () => {
                   id="password"
                   name="password"
                   type="password"
-                  autoComplete={isLogin ? "current-password" : "new-password"}
+                  autoComplete={isLogin ? "Текущий пароль" : "Новый пароль"}
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -127,6 +151,7 @@ const LoginPage: React.FC = () => {
                     name="remember_me"
                     type="checkbox"
                     className="h-4 w-4 text-amber-500 focus:ring-amber-500 border-gray-300 rounded"
+                    onChange={e => setRememberMe(e.target.checked)}
                   />
                   <label htmlFor="remember_me" className="ml-2 block text-sm text-gray-700">
                     Запомнить меня
@@ -181,7 +206,7 @@ const LoginPage: React.FC = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default LoginPage;
+export default LoginPage

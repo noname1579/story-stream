@@ -3,9 +3,9 @@ import { useEffect, useState } from "react"
 
 function TypingText({
   words = ["Откройте для себя свою следующую любимую книгу"],
-  typingSpeed = 80,
+  typingSpeed = 60,
   deleteSpeed = 9999999,
-  delayBetweenWords = 100,
+  delayBetweenWords = 1,
 }: {
   words?: string[];
   typingSpeed?: number

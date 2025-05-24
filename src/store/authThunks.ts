@@ -32,27 +32,27 @@ export const login = createAsyncThunk<User, LoginCredentials>(
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ email, password }),
-      });
+      })
 
-      const data = await response.json();
+      const data = await response.json()
 
       if (!response.ok) {
-        throw new Error(data.message || 'Ошибка входа');
+        throw new Error(data.message || 'Ошибка входа | Проверьте email и пароль')
       }
 
-      localStorage.setItem('auth', JSON.stringify(data.user));
-      localStorage.setItem('token', data.session.access_token);
+      localStorage.setItem('auth', JSON.stringify(data.user))
+      localStorage.setItem('token', data.session.access_token)
       
       return data.user;
     } catch (error) {
-      const message = error instanceof Error ? error.message : 'Ошибка входа';
+      const message = error instanceof Error ? error.message : 'Ошибка входа'
       dispatch(setError(message));
-      return rejectWithValue(message);
+      return rejectWithValue(message)
     } finally {
-      dispatch(setLoading(false));
+      dispatch(setLoading(false))
     }
   }
-);
+)
 
 export const register = createAsyncThunk<User, RegisterCredentials>(
   'auth/register',
@@ -115,7 +115,7 @@ export const logout = createAsyncThunk(
 
 export const checkAuth = createAsyncThunk<User>(
   'auth/checkAuth',
-  async (_, { dispatch, rejectWithValue }) => {
+  async (_, { rejectWithValue }) => {
     try {
       const token = localStorage.getItem('token')
       if (!token) return rejectWithValue('Токен отсутствует')

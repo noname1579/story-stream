@@ -40,9 +40,9 @@ export default function NotFoundPage() {
           Вернуться на главную
         </motion.button>
         
-        <div className="my-5 text-gray-500">
-          <p>или</p>
-          <div className="flex justify-center mt-2">
+        <div className="text-gray-500">
+          <p className="my-5">или</p>
+          <div className="flex justify-center">
             <button 
               onClick={() => window.location.reload()}
               className="text-indigo-600 hover:underline text-md"
