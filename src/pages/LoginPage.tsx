@@ -1,32 +1,28 @@
-import React, { useState } from 'react'
-import { BookOpen, Mail, Lock, User, ArrowRight } from 'lucide-react'
-import { useAuth } from '../contexts/AuthContext'
+import React, { useState } from 'react';
+import { BookOpen, Mail, Lock, User, ArrowRight } from 'lucide-react';
+import { useAppDispatch, useAppSelector } from '../store/hooks'
+import { login, register } from '../store/authThunks';
 
 const LoginPage: React.FC = () => {
-  const { login, signup } = useAuth(); // Получите функции из контекста
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState('');
+  
+  const dispatch = useAppDispatch();
+  const { isLoading, error } = useAppSelector((state) => state.auth);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
-    setLoading(true);
-
+    
     try {
       if (isLogin) {
-        await login(email, password); // Вход
+        await dispatch(login({ email, password })).unwrap();
       } else {
-        await signup(name, email, password); // Регистрация
+        await dispatch(register({ name, email, password })).unwrap();
       }
-      console.log('Успешно:', { email, name });
-    } catch (error) {
-      console.error('Ошибка:', error);
-    } finally {
-      setLoading(false);
+    } catch (err) {
+      console.error(err);
     }
   };
 
@@ -39,8 +35,10 @@ const LoginPage: React.FC = () => {
         <h2 className="mt-6 text-center font-serif text-4xl font-bold text-gray-800">
           {isLogin ? 'Войти в аккаунт' : 'Создать аккаунт'}
         </h2>
-        <p className="mt-2 text-center text-gray-600 max-w">
-          {isLogin ? "Введите свои данные ниже, чтобы войти в аккаунт" : "Присоединяйтесь к нам, чтобы начать знакомство с нашей коллекцией книг"}
+        <p className="mt-2 text-center text-gray-600">
+          {isLogin 
+            ? "Введите свои данные ниже, чтобы войти в аккаунт" 
+            : "Присоединяйтесь к нам, чтобы начать знакомство с нашей коллекцией книг"}
         </p>
       </div>
 
@@ -48,11 +46,7 @@ const LoginPage: React.FC = () => {
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
           {error && (
             <div className="bg-red-50 border-l-4 border-red-500 p-4 mb-6">
-              <div className="flex">
-                <div className="ml-3">
-                  <p className="text-sm text-red-700">{error}</p>
-                </div>
-              </div>
+              <p className="text-sm text-red-700">{error}</p>
             </div>
           )}
           
@@ -64,7 +58,7 @@ const LoginPage: React.FC = () => {
                 </label>
                 <div className="mt-1 relative rounded-md shadow-sm">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                    <User  className="h-5 w-5 text-gray-400" />
+                    <User className="h-5 w-5 text-gray-400" />
                   </div>
                   <input
                     id="name"
@@ -114,12 +108,13 @@ const LoginPage: React.FC = () => {
                   id="password"
                   name="password"
                   type="password"
-                  autoComplete={isLogin ? "Текущий пароль" : "Новый пароль"}
+                  autoComplete={isLogin ? "current-password" : "new-password"}
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="pl-10 block w-full border-gray-300 rounded-md focus:ring-amber-500 focus:border-amber-500"
-                  placeholder="••••••••"
+                  placeholder="••••••"
+                  minLength={6}
                 />
               </div>
             </div>
@@ -149,10 +144,10 @@ const LoginPage: React.FC = () => {
             <div>
               <button
                 type="submit"
-                disabled={loading}
+                disabled={isLoading}
                 className="group relative w-full flex justify-center py-3 px-4 border border-transparent rounded-full text-white bg-amber-500 hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 transition-colors disabled:opacity-50"
               >
-                {loading ? (
+                {isLoading ? (
                   <span>Процесс...</span>
                 ) : (
                   <>
@@ -167,10 +162,10 @@ const LoginPage: React.FC = () => {
           <div className="mt-6">
             <div className="relative">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-500"></div>
+                <div className="w-full border-t border-gray-300"></div>
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white text-gray-900">или</span>
+                <span className="px-2 bg-white text-gray-500">или</span>
               </div>
             </div>
 
