@@ -12,6 +12,7 @@
     "deploy": "gh-pages -d dist"
   },
   "dependencies": {
+    "@appigram/yookassa-node": "^1.1.10",
     "@reduxjs/toolkit": "^2.8.2",
     "axios": "^1.9.0",
     "framer-motion": "^12.12.1",

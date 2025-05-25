@@ -16,13 +16,13 @@ import { useDispatch } from 'react-redux';
 import { checkAuth } from './store/authThunks';
 
 function App() {
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery, setSearchQuery] = useState('')
 
   const handleSearchSubmit = (query: string) => {
     setSearchQuery(query);
-  };
+  }
 
-  const dispatch = useDispatch();
+  const dispatch = useDispatch()
   
   useEffect(() => {
     const checkUser_Auth = async () => {

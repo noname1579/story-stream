@@ -1,49 +1,49 @@
-import React, { useEffect, useState } from 'react';
-import { BookOpen, ShoppingCart, User, Heart, Search, Menu, X } from 'lucide-react';
-import { useCart } from '../contexts/CartContext';
-import { Link, useNavigate } from 'react-router-dom';
-import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { logout } from '../store/authThunks';
+import React, { useEffect, useState } from 'react'
+import { BookOpen, ShoppingCart, User, Heart, Search, Menu, X } from 'lucide-react'
+import { useCart } from '../contexts/CartContext'
+import { Link, useNavigate } from 'react-router-dom'
+import { useAppDispatch, useAppSelector } from '../store/hooks'
+import { logout } from '../store/authThunks'
 
 interface NavbarProps {
   onSearchSubmit: (query: string) => void;
 }
 
 const Navbar: React.FC<NavbarProps> = ({ onSearchSubmit }) => {
-  const { totalItems } = useCart();
-  const [searchQuery, setSearchQuery] = useState('');
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
+  const { totalItems } = useCart()
+  const [searchQuery, setSearchQuery] = useState('')
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const dispatch = useAppDispatch()
+  const navigate = useNavigate()
   
   const { isAuthenticated, user } = useAppSelector((state) => state.auth);
 
   const handleSearchSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    onSearchSubmit(searchQuery);
+    e.preventDefault()
+    onSearchSubmit(searchQuery)
   };
 
   const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
+    setIsMobileMenuOpen(!isMobileMenuOpen)
+  }
 
   const handleLogout = async () => {
     try {
-      await dispatch(logout()).unwrap();
-      navigate('/');
-      setIsMobileMenuOpen(false);
+      await dispatch(logout()).unwrap()
+      navigate('/')
+      setIsMobileMenuOpen(false)
     } catch (err) {
-      console.error('Ошибка при выходе:', err);
+      console.error('Ошибка при выходе:', err)
     }
   };
 
   useEffect(() => {
     if (isMobileMenuOpen) {
-      document.body.style.overflow = 'hidden';
+      document.body.style.overflow = 'hidden'
     } else {
-      document.body.style.overflow = '';
+      document.body.style.overflow = ''
     }
-  }, [isMobileMenuOpen]);
+  }, [isMobileMenuOpen])
 
   return (
     <nav className="bg-white shadow-md sticky top-0 z-50">
@@ -54,7 +54,7 @@ const Navbar: React.FC<NavbarProps> = ({ onSearchSubmit }) => {
             <span className="ml-2 text-xl font-serif font-semibold text-gray-800">StoryStream</span>
           </Link>
 
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="hidden lg:flex items-center space-x-4">
             <div className="relative">
               <form onSubmit={handleSearchSubmit} className="flex items-center">
                 <input
@@ -105,12 +105,11 @@ const Navbar: React.FC<NavbarProps> = ({ onSearchSubmit }) => {
             ) : (
               <Link to="/login" className="text-gray-700 hover:text-amber-500 px-3 py-2">
                 <User  className="h-6 w-6" />
-                {/* <span className="ml-1 hidden lg:inline">Войти</span> */}
               </Link>
             )}
           </div>
 
-          <div className="md:hidden flex items-center">
+          <div className="lg:hidden flex items-center">
             <button
               onClick={toggleMobileMenu}
               className="text-gray-700 hover:text-amber-500 focus:outline-none"
@@ -127,7 +126,7 @@ const Navbar: React.FC<NavbarProps> = ({ onSearchSubmit }) => {
       </div>
 
       {isMobileMenuOpen && (
-        <div className="md:hidden fixed inset-0 bg-white z-40 mt-16 overflow-y-auto">
+        <div className="lg:hidden fixed inset-0 bg-white z-40 mt-16 overflow-y-auto">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             <form onSubmit={handleSearchSubmit} className="flex items-center mb-3 px-3">
               <input
@@ -215,7 +214,7 @@ const Navbar: React.FC<NavbarProps> = ({ onSearchSubmit }) => {
         </div>
       )}
     </nav>
-  );
-};
+  )
+}
 
-export default Navbar;
+export default Navbar
