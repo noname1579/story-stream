@@ -13,6 +13,9 @@ const LoginPage: React.FC = () => {
   const dispatch = useAppDispatch()
   const { isLoading, error } = useAppSelector((state) => state.auth)
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [])
 
   useEffect(() => {
     const savedEmail = localStorage.getItem('rememberedEmail');

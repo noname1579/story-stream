@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Ghost, Rocket, Castle, Scroll, ShieldAlert, Book, Brain, Sparkles, Search, User, Briefcase } from 'lucide-react'
+import { Ghost, Rocket, Castle, Scroll, ShieldAlert, Book, Sparkles, Search, Briefcase } from 'lucide-react'
 
 interface Category {
   id: number;
@@ -16,10 +16,8 @@ const iconComponents: Record<string, JSX.Element> = {
   Scroll: <Scroll className="w-5 h-5" />,
   ShieldAlert: <ShieldAlert className="w-5 h-5" />,
   Book: <Book className="w-5 h-5" />,
-  Brain: <Brain className="w-5 h-5" />,
   Sparkles: <Sparkles className="w-5 h-5" />,
   Search: <Search className="w-5 h-5" />,
-  User: <User className="w-5 h-5" />,
   Briefcase: <Briefcase className="w-5 h-5" />
 }
 

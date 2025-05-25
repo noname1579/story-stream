@@ -17,6 +17,10 @@ const BookDetailsPage: React.FC = () => {
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [])
+
+  useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get('https://story-stream-server.vercel.app/books')

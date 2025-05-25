@@ -4,6 +4,7 @@ import FeaturedCategories from '../components/FeaturedCategories'
 import Testimonials from '../components/Testimonials'
 import { useBooks } from '../data/books'
 import { TailChase } from 'ldrs/react'
+import { useEffect } from 'react'
 
 
 
@@ -18,6 +19,10 @@ const HomePage: React.FC<HomePageProps> = ({ searchQuery }) => {
   const featuredBooks = getFeaturedBooks()
   const newReleases = getNewReleases()
   const searchResults = searchQuery ? searchBooks(searchQuery) : null
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [])
 
   if (loading) {
     return (

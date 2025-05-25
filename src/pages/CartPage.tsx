@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import CartItem from '../components/CartItem'
 import { useCart } from '../contexts/CartContext'
@@ -6,6 +6,10 @@ import { ShoppingCart, CreditCard, ArrowRight, Trash2 } from 'lucide-react'
 
 const CartPage: React.FC = () => {
   const { cart, totalItems, totalPrice, clearCart } = useCart()
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [])
 
   if (cart.length === 0) {
     return (

@@ -21,6 +21,10 @@ const BooksPage: React.FC<BooksPageProps> = ({ searchQuery }) => {
   const { books, loading, searchBooks } = useBooks()
 
   useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [])
+
+  useEffect(() => {
     const genreFromUrl = searchParams.get('genre')
     if (genreFromUrl) {
       setSelectedGenre(genreFromUrl)

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useWishlist } from '../contexts/WishlistContext';
 import { useCart } from '../contexts/CartContext';
@@ -6,14 +6,18 @@ import BookCard from '../components/BookCard';
 import { Heart, ArrowRight } from 'lucide-react';
 
 const WishlistPage: React.FC = () => {
-  const { wishlist, removeFromWishlist } = useWishlist();
-  const { addToCart } = useCart();
+  const { wishlist } = useWishlist()
+  const { addToCart } = useCart()
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [])
   
   const handleAddAllToCart = () => {
     wishlist.forEach(book => {
       addToCart(book);
-    });
-  };
+    })
+  }
 
   if (wishlist.length === 0) {
     return (
