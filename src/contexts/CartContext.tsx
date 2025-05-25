@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react'
+import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react'
 import { Book, CartItem } from '../types'
 
 interface CartContextType {
@@ -25,8 +25,20 @@ interface CartProviderProps {
   children: ReactNode;
 }
 
+const CART_STORAGE_KEY = 'bookstore_cart'
+
 export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
-  const [cart, setCart] = useState<CartItem[]>([])
+  const [cart, setCart] = useState<CartItem[]>(() => {
+    if (typeof window !== 'undefined') {
+      const savedCart = localStorage.getItem(CART_STORAGE_KEY)
+      return savedCart ? JSON.parse(savedCart) : []
+    }
+    return [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
+  }, [cart]);
 
   const addToCart = (book: Book) => {
     setCart(currentCart => {
@@ -49,7 +61,7 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
   const updateQuantity = (bookId: string, quantity: number) => {
     if (quantity < 1) {
       removeFromCart(bookId)
-      return 0 
+      return
     }
 
     setCart(currentCart => 

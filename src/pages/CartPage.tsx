@@ -65,7 +65,7 @@ const CartPage: React.FC = () => {
               </div>
               <div className="flex justify-between text-gray-600">
                 <span>Доставка</span>
-                <span>{totalPrice > 2999 ? 'Бесплатно' : '499.99 ₽'}</span>
+                <span>{totalPrice >= 2999 ? 'Бесплатно' : '499.99 ₽'}</span>
               </div>
               
               <div className="border-t border-gray-200 pt-4 mt-4">

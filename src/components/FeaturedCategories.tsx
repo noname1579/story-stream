@@ -1,18 +1,55 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { Ghost, Rocket, Castle, Scroll, ShieldAlert, Book, Brain, Sparkles, Search, User, Briefcase } from 'lucide-react'
 
-const categories = [
-  { id: 1, name: 'Художественная литература', icon: '📚', color: 'bg-amber-500' },
-  { id: 2, name: 'Нон-фикшн', icon: '🧠', color: 'bg-teal-500' },
-  { id: 3, name: 'Саморазвитие', icon: '✨', color: 'bg-indigo-500' },
-  { id: 4, name: 'Научная фантастика', icon: '🚀', color: 'bg-rose-500' },
-  { id: 5, name: 'Фэнтези', icon: '🐉', color: 'bg-emerald-500' },
-  { id: 6, name: 'Детективы', icon: '🔍', color: 'bg-purple-500' },
-  { id: 7, name: 'Биографии', icon: '👤', color: 'bg-amber-500' },
-  { id: 8, name: 'Бизнес', icon: '💼', color: 'bg-blue-500' }
-]
+interface Category {
+  id: number;
+  name: string;
+  icon: string;
+  color: string;
+}
+
+const iconComponents: Record<string, JSX.Element> = {
+  Ghost: <Ghost className="w-5 h-5" />,
+  Rocket: <Rocket className="w-5 h-5" />,
+  Castle: <Castle className="w-5 h-5" />,
+  Scroll: <Scroll className="w-5 h-5" />,
+  ShieldAlert: <ShieldAlert className="w-5 h-5" />,
+  Book: <Book className="w-5 h-5" />,
+  Brain: <Brain className="w-5 h-5" />,
+  Sparkles: <Sparkles className="w-5 h-5" />,
+  Search: <Search className="w-5 h-5" />,
+  User: <User className="w-5 h-5" />,
+  Briefcase: <Briefcase className="w-5 h-5" />
+}
 
 const FeaturedCategories: React.FC = () => {
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await fetch('https://story-stream-server.vercel.app/jenres')
+        if (!response.ok) throw new Error('Ошибка загрузки категорий')
+        const data = await response.json()
+        setCategories(data);
+      } catch (err) {
+        setError(err instanceof Error ? err.message : 'Неизвестная ошибка :/')
+      }
+    }
+
+    fetchCategories()
+  }, [])
+
+  if (error) {
+    return (
+      <div className="py-12 text-center text-red-500 text-lg">
+        {error} :/
+      </div>
+    )
+  }
+
   return (
     <section className="py-12 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -31,11 +68,11 @@ const FeaturedCategories: React.FC = () => {
               className="flex flex-col items-center p-6 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow"
             >
               <div className={`${category.color} text-white p-3 rounded-full mb-4`}>
-                <span className="text-2xl" role="img" aria-label={category.name}>
-                  {category.icon}
-                </span>
+                <div className="w-6 h-6 flex items-center justify-center">
+                  {iconComponents[category.icon] || <Book className="w-5 h-5" />}
+                </div>
               </div>
-              <h3 className="font-serif font-medium text-gray-800">{category.name}</h3>
+              <h3 className="font-serif font-medium text-gray-800 text-center">{category.name}</h3>
             </Link>
           ))}
         </div>

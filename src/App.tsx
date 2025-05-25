@@ -26,15 +26,15 @@ function App() {
   
   useEffect(() => {
     const checkUser_Auth = async () => {
-      const resultAction = await dispatch(checkAuth())
+      const resultAction = dispatch(checkAuth())
       if (checkAuth.fulfilled.match(resultAction)) {
         console.log('Пользователь залогинен:', resultAction.payload)
       } else {
-        console.log('Пользователь не залогинен:', resultAction.payload);
+        console.log('Пользователь не залогинен:', resultAction.payload)
       }
-    };
-    checkUser_Auth();
-  }, [dispatch]);
+    }
+    checkUser_Auth()
+  }, [dispatch])
 
   return (
     <AuthInitializer>
@@ -60,7 +60,7 @@ function App() {
         </CartProvider>
       </Router>
     </AuthInitializer>
-  );
+  )
 }
 
-export default App;
+export default App

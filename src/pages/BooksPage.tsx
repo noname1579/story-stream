@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useSearchParams, useLocation } from 'react-router-dom'
 import BookGrid from '../components/BookGrid';
 import { useBooks } from '../data/books'
 import { Filter, SortAsc, SortDesc } from 'lucide-react'
@@ -10,13 +11,35 @@ interface BooksPageProps {
 }
 
 const BooksPage: React.FC<BooksPageProps> = ({ searchQuery }) => {
+  const [searchParams, setSearchParams] = useSearchParams()
+  const location = useLocation()
   const [selectedGenre, setSelectedGenre] = useState<string>('')
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc')
-  const [sortBy, setSortBy] = useState<'title' | 'price'>('title')
+  const [sortBy, setSortBy] = useState<'title' | 'price' | 'rating'>('title')
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false)
   
   const { books, loading, searchBooks } = useBooks()
-  
+
+  useEffect(() => {
+    const genreFromUrl = searchParams.get('genre')
+    if (genreFromUrl) {
+      setSelectedGenre(genreFromUrl)
+    }
+  }, [location.search, searchParams])
+
+  useEffect(() => {
+    if (selectedGenre) {
+      searchParams.set('genre', selectedGenre)
+    } else {
+      searchParams.delete('genre')
+    }
+    setSearchParams(searchParams, 
+      { 
+        replace: true 
+      }
+    )
+  }, [selectedGenre, searchParams, setSearchParams])
+
   const filteredBooks = React.useMemo(() => {
     let result = [...books]
     
@@ -28,15 +51,19 @@ const BooksPage: React.FC<BooksPageProps> = ({ searchQuery }) => {
       result = result.filter(book => book.genre.includes(selectedGenre))
     }
     
-    result.sort((a, b) => {
+     result.sort((a, b) => {
       if (sortBy === 'title') {
         return sortOrder === 'asc'
           ? a.title.localeCompare(b.title)
           : b.title.localeCompare(a.title)
-      } else {
+      } else if (sortBy === 'price') {
         return sortOrder === 'asc'
           ? a.price - b.price
           : b.price - a.price
+      } else {
+        return sortOrder === 'asc'
+          ? a.rating - b.rating
+          : b.rating - a.rating
       }
     })
     
@@ -67,7 +94,11 @@ const BooksPage: React.FC<BooksPageProps> = ({ searchQuery }) => {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="flex justify-between items-center mb-8">
         <h1 className="font-serif text-xl md:text-3xl font-bold text-gray-800">
-          {searchQuery ? `Результаты поиск по запросу: "${searchQuery}"` : selectedGenre ? `Книги в жанре ${selectedGenre}` : 'Все книги'}
+          {searchQuery 
+            ? `Результаты поиска по запросу: "${searchQuery}"` 
+            : selectedGenre 
+              ? `Книги в жанре ${selectedGenre}` 
+              : 'Все книги'}
         </h1>
         
         <button
@@ -136,6 +167,17 @@ const BooksPage: React.FC<BooksPageProps> = ({ searchQuery }) => {
                     className="text-amber-500 focus:ring-amber-500"
                   />
                   <span className="ml-2 text-gray-600">Цене</span>
+                </label>
+
+                <label className="flex items-center">
+                  <input
+                    type="radio"
+                    name="sortBy"
+                    checked={sortBy === 'rating'}
+                    onChange={() => setSortBy('rating')}
+                    className="text-amber-500 focus:ring-amber-500"
+                  />
+                  <span className="ml-2 text-gray-600">Рейтингу</span>
                 </label>
               </div>
             </div>
@@ -219,6 +261,20 @@ const BooksPage: React.FC<BooksPageProps> = ({ searchQuery }) => {
                       className="text-amber-500 focus:ring-amber-500"
                     />
                     <span className="ml-2 text-gray-600">Цене</span>
+                  </label>
+
+                  <label className="flex items-center">
+                    <input
+                      type="radio"
+                      name="sortBy-mobile"
+                      checked={sortBy === 'rating'}
+                      onChange={() => {
+                        setSortBy('rating')
+                        setIsMobileFilterOpen(false)
+                      }}
+                      className="text-amber-500 focus:ring-amber-500"
+                    />
+                    <span className="ml-2 text-gray-600">Рейтингу</span>
                   </label>
                 </div>
               </div>

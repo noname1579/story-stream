@@ -21,9 +21,9 @@ const Hero: React.FC = () => {
                 Посмотреть все книги
                 <ChevronRight className="ml-2 h-5 w-5" />
               </Link>
-              <Link to="/books/1" className="inline-flex items-center bg-transparent text-white border border-white hover:bg-white/10 rounded-full px-14 md:px-14 py-3 font-medium transition-colors">
+              {/* <Link to="/books/1" className="inline-flex items-center bg-transparent text-white border border-white hover:bg-white/10 rounded-full px-14 md:px-14 py-3 font-medium transition-colors">
                 Популярные
-              </Link>
+              </Link> */}
             </div>
           </div>
           
@@ -44,7 +44,7 @@ const Hero: React.FC = () => {
                   className="w-24 h-36 object-cover rounded shadow"
                 />
                 <div>
-                  {/* поменять на настоящие данные + сделать ежедневный выбор книги со скидкой*/}
+                  {/* Поменять на настоящие данные + сделать ежедневный выбор книги со скидкой*/}
                   <h4 className="font-serif text-gray-800 text-lg font-medium mb-1">Преступление и наказание</h4>
                   <p className="text-gray-600 text-md mb-2">Федор Достоевский</p>
                   <div className="flex text-amber-500 mb-2">
