@@ -21,7 +21,7 @@ const HomePage: React.FC<HomePageProps> = ({ searchQuery }) => {
   const searchResults = searchQuery ? searchBooks(searchQuery) : null
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    window.scrollTo(0, 0)
   }, [])
 
   if (loading) {
@@ -47,8 +47,8 @@ const HomePage: React.FC<HomePageProps> = ({ searchQuery }) => {
           />
         ) : (
           <div>
-            <BookGrid books={featuredBooks} title="Рекомендуемые книги" />
-            <BookGrid books={newReleases} title="Новинки" />
+            <BookGrid books={featuredBooks} title="Рекомендуемые книги" maxItems={4} />
+            <BookGrid books={newReleases} title="Новинки" maxItems={4} />
           </div>
         )}
       </div>

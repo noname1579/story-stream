@@ -1,8 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-
-
-import { Book, Rocket, Search, Ghost, ShieldAlert, Sparkles, Castle, Scroll } from 'lucide-react';
+import { Book, Rocket, Search, Ghost, ShieldAlert, Sparkles, Castle, Scroll } from 'lucide-react'
 
 const categories = [
   { 
@@ -53,7 +51,7 @@ const categories = [
     icon: <Book className="w-5 h-5" />, 
     color: 'bg-pink-500' 
   }
-];
+]
 
 const FeaturedCategories: React.FC = () => {
   return (
