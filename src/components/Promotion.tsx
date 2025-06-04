@@ -16,7 +16,6 @@ interface Book {
 
 const Promotion: React.FC = () => {
   const [book, setBook] = useState<Book | null>(null)
-  const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
@@ -34,13 +33,11 @@ const Promotion: React.FC = () => {
       } catch (err) {
         setError(axios.isAxiosError(err) 
           ? err.message 
-          : 'Произошла неизвестная ошибка')
-      } finally {
-        setLoading(false)
+          : 'Произошла неизвестная ошибка :/')
       }
     }
 
-    fetchRandomBook();
+    fetchRandomBook()
   }, []);
 
   if (error) {
@@ -80,7 +77,7 @@ const Promotion: React.FC = () => {
             <h4 className="font-serif text-gray-800 text-lg font-medium mb-1">{book.title}</h4>
             <p className="text-gray-600 text-md mb-2">{book.author}</p>
             <div className="flex text-amber-500 mb-2">
-              <span>{'★'.repeat(Math.round(book.rating))}{'☆'.repeat(5 - Math.round(book.rating))}</span>
+              <span>{'★'.repeat(Math.round(book.rating))}</span>
             </div>
             <p className="text-gray-700 text-sm line-clamp-3">
               {book.description}
@@ -93,7 +90,7 @@ const Promotion: React.FC = () => {
               {discountedPrice} <RussianRuble className='text-gray-600' />
             </span>
             <span className="ml-2 text-sm text-gray-500 line-through flex">
-              {book.price} <RussianRuble className='text-gray-400' />
+              {book.price} <RussianRuble className='text-gray-400 w-5 h-5' />
             </span>
           </div>
           <Link 

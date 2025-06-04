@@ -13,10 +13,16 @@ const Navbar: React.FC<NavbarProps> = ({ onSearchSubmit }) => {
   const { totalItems } = useCart()
   const [searchQuery, setSearchQuery] = useState('')
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [hasAuthInLocalStorage, setHasAuthInLocalStorage] = useState(false)
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   
   const { isAuthenticated, user } = useAppSelector((state) => state.auth);
+
+  useEffect(() => {
+    const auth = localStorage.getItem('auth')
+    setHasAuthInLocalStorage(!!auth)
+  }, [isAuthenticated])
 
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -32,8 +38,9 @@ const Navbar: React.FC<NavbarProps> = ({ onSearchSubmit }) => {
       await dispatch(logout()).unwrap()
       navigate('/')
       setIsMobileMenuOpen(false)
+      setHasAuthInLocalStorage(false)
     } catch (err) {
-      console.error('Ошибка при выходе:', err)
+      console.error('Ошибка при выходе :/ ', err)
     }
   };
 
@@ -44,6 +51,8 @@ const Navbar: React.FC<NavbarProps> = ({ onSearchSubmit }) => {
       document.body.style.overflow = ''
     }
   }, [isMobileMenuOpen])
+
+  const showProfileButton = isAuthenticated || hasAuthInLocalStorage
 
   return (
     <nav className="bg-white shadow-md sticky top-0 z-50">
@@ -83,7 +92,7 @@ const Navbar: React.FC<NavbarProps> = ({ onSearchSubmit }) => {
                 </span>
               )}
             </Link>
-            {isAuthenticated ? (
+            {showProfileButton ? (
               <div className="relative group">
                 <button className="text-gray-700 hover:text-amber-500 px-3 py-2">
                   <User  className="h-6 w-6" />
@@ -173,7 +182,7 @@ const Navbar: React.FC<NavbarProps> = ({ onSearchSubmit }) => {
                 </span>
               )}
             </Link>
-            {isAuthenticated ? (
+            {showProfileButton ? (
               <>
                 <Link 
                   to="/profile" 
