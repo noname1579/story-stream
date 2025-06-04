@@ -13,7 +13,7 @@ const BookGrid: React.FC<BookGridProps> = ({ books, title, maxItems }) => {
   const displayedBooks = maxItems ? books.slice(0, maxItems) : books
 
   return (
-    <div className="my-8">
+    <div className="my-8 mx-4 md:mx-0">
       {title && (
         <h2 className="font-serif text-2xl font-semibold text-gray-800 mb-6">{title}</h2>
       )}

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { useSearchParams, useLocation } from 'react-router-dom'
-import BookGrid from '../components/BookGrid';
+import BookGrid from '../components/BookGrid'
 import { useBooks } from '../data/books'
-import { Filter, SortAsc, SortDesc } from 'lucide-react'
+import { Filter, X } from 'lucide-react'
 import { TailChase } from 'ldrs/react'
 import 'ldrs/react/TailChase.css'
 
@@ -17,12 +17,14 @@ const BooksPage: React.FC<BooksPageProps> = ({ searchQuery }) => {
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc')
   const [sortBy, setSortBy] = useState<'title' | 'price' | 'rating'>('title')
   const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false)
+  const [visibleBooksCount, setVisibleBooksCount] = useState(8)
   
   const { books, loading, searchBooks } = useBooks()
 
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [])
+    window.scrollTo(0, 0)
+    setVisibleBooksCount(8)
+  }, [searchQuery, selectedGenre, sortOrder, sortBy])
 
   useEffect(() => {
     const genreFromUrl = searchParams.get('genre')
@@ -37,11 +39,7 @@ const BooksPage: React.FC<BooksPageProps> = ({ searchQuery }) => {
     } else {
       searchParams.delete('genre')
     }
-    setSearchParams(searchParams, 
-      { 
-        replace: true 
-      }
-    )
+    setSearchParams(searchParams, { replace: true })
   }, [selectedGenre, searchParams, setSearchParams])
 
   const filteredBooks = React.useMemo(() => {
@@ -55,7 +53,7 @@ const BooksPage: React.FC<BooksPageProps> = ({ searchQuery }) => {
       result = result.filter(book => book.genre.includes(selectedGenre))
     }
     
-     result.sort((a, b) => {
+    result.sort((a, b) => {
       if (sortBy === 'title') {
         return sortOrder === 'asc'
           ? a.title.localeCompare(b.title)
@@ -73,6 +71,13 @@ const BooksPage: React.FC<BooksPageProps> = ({ searchQuery }) => {
     
     return result
   }, [books, searchQuery, selectedGenre, sortOrder, sortBy, searchBooks])
+
+  const visibleBooks = filteredBooks.slice(0, visibleBooksCount)
+  const hasMoreBooks = filteredBooks.length > visibleBooksCount
+
+  const loadMoreBooks = () => {
+    setVisibleBooksCount(prev => prev + 16)
+  }
 
   const allGenres = Array.from(
     new Set(books.flatMap(book => book.genre))
@@ -101,7 +106,7 @@ const BooksPage: React.FC<BooksPageProps> = ({ searchQuery }) => {
           {searchQuery 
             ? `Результаты поиска по запросу: "${searchQuery}"` 
             : selectedGenre 
-              ? `Книги в жанре ${selectedGenre}` 
+              ? `Книги в жанре: ${selectedGenre}` 
               : 'Все книги'}
         </h1>
         
@@ -197,7 +202,7 @@ const BooksPage: React.FC<BooksPageProps> = ({ searchQuery }) => {
                   onClick={() => setIsMobileFilterOpen(false)}
                   className="text-gray-500"
                 >
-                  <div className="h-5 w-5" />
+                  <X className="h-5 w-5" />
                 </button>
               </div>
               
@@ -210,8 +215,8 @@ const BooksPage: React.FC<BooksPageProps> = ({ searchQuery }) => {
                       name="genre-mobile"
                       checked={selectedGenre === ''}
                       onChange={() => {
-                        setSelectedGenre('');
-                        setIsMobileFilterOpen(false);
+                        setSelectedGenre('')
+                        setIsMobileFilterOpen(false)
                       }}
                       className="text-amber-500 focus:ring-amber-500"
                     />
@@ -225,8 +230,8 @@ const BooksPage: React.FC<BooksPageProps> = ({ searchQuery }) => {
                         name="genre-mobile"
                         checked={selectedGenre === genre}
                         onChange={() => {
-                          setSelectedGenre(genre);
-                          setIsMobileFilterOpen(false);
+                          setSelectedGenre(genre)
+                          setIsMobileFilterOpen(false)
                         }}
                         className="text-amber-500 focus:ring-amber-500"
                       />
@@ -245,8 +250,8 @@ const BooksPage: React.FC<BooksPageProps> = ({ searchQuery }) => {
                       name="sortBy-mobile"
                       checked={sortBy === 'title'}
                       onChange={() => {
-                        setSortBy('title');
-                        setIsMobileFilterOpen(false);
+                        setSortBy('title')
+                        setIsMobileFilterOpen(false)
                       }}
                       className="text-amber-500 focus:ring-amber-500"
                     />
@@ -259,8 +264,8 @@ const BooksPage: React.FC<BooksPageProps> = ({ searchQuery }) => {
                       name="sortBy-mobile"
                       checked={sortBy === 'price'}
                       onChange={() => {
-                        setSortBy('price');
-                        setIsMobileFilterOpen(false);
+                        setSortBy('price')
+                        setIsMobileFilterOpen(false)
                       }}
                       className="text-amber-500 focus:ring-amber-500"
                     />
@@ -287,22 +292,24 @@ const BooksPage: React.FC<BooksPageProps> = ({ searchQuery }) => {
         )}
         
         <div className="md:col-span-3">
-          <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-            <div className="flex items-center justify-between">
+          <div className="bg-white rounded-lg shadow-md p-4 md:p-6 mb-6">
+            <div className="block md:flex items-center justify-between">
               <div>
-                <span className="text-gray-600">Показано {filteredBooks.length} книг</span>
+                <span className="text-gray-800 text-sm md:text-lg">
+                  Показано {visibleBooks.length} из {filteredBooks.length} книг
+                </span>
               </div>
               
-              <div className="flex items-center">
-                <span className="mr-2 text-gray-600">Сортировка:</span>
+              <div className="flex items-center mt-2 md:mt-0">
+                <span className="mr-2 text-gray-600 text-sm md:text-lg">Сортировка:</span>
                 <button
                   onClick={toggleSortOrder}
                   className="flex items-center text-gray-700 hover:text-amber-500 transition-colors"
-                  title={`Sort ${sortOrder === 'asc' ? 'по убыванию' : 'по возрастанию'}`}
+                  title={`Сортировать ${sortOrder === 'asc' ? 'по убыванию' : 'по возрастанию'}`}
                 >
                   {sortOrder === 'asc' 
-                    ? <SortAsc className="h-5 w-5" /> 
-                    : <SortDesc className="h-5 w-5" />
+                    ? <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiM2YjcyODAiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS1hcnJvdy11cC1pY29uIGx1Y2lkZS1hcnJvdy11cCI+PHBhdGggZD0ibTUgMTIgNy03IDcgNyIvPjxwYXRoIGQ9Ik0xMiAxOVY1Ii8+PC9zdmc+" className="h-5 w-5" /> 
+                    : <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiM2YjcyODAiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS1hcnJvdy1kb3duLWljb24gbHVjaWRlLWFycm93LWRvd24iPjxwYXRoIGQ9Ik0xMiA1djE0Ii8+PHBhdGggZD0ibTE5IDEyLTcgNy03LTciLz48L3N2Zz4=" className="h-5 w-5" />
                   }
                 </button>
               </div>
@@ -310,7 +317,19 @@ const BooksPage: React.FC<BooksPageProps> = ({ searchQuery }) => {
           </div>
           
           {filteredBooks.length > 0 ? (
-            <BookGrid books={filteredBooks} />
+            <>
+              <BookGrid books={visibleBooks} />
+              {hasMoreBooks && (
+                <div className="mt-6 text-center">
+                  <button
+                    onClick={loadMoreBooks}
+                    className="bg-amber-500 hover:bg-amber-600 text-white font-medium py-2 px-6 rounded-full transition-colors"
+                  >
+                    Показать еще книги
+                  </button>
+                </div>
+              )}
+            </>
           ) : (
             <div className="bg-white rounded-lg shadow-md p-8 text-center">
               <h2 className="text-xl font-serif font-semibold text-gray-800 mb-2">Книги не найдены</h2>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { BookOpen, ShoppingCart, User, Heart, Search, Menu, X } from 'lucide-react'
 import { useCart } from '../contexts/CartContext'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../store/hooks'
 import { logout } from '../store/authThunks'
 
@@ -15,7 +15,6 @@ const Navbar: React.FC<NavbarProps> = ({ onSearchSubmit }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [hasAuthInLocalStorage, setHasAuthInLocalStorage] = useState(false)
   const dispatch = useAppDispatch()
-  const navigate = useNavigate()
   
   const { isAuthenticated, user } = useAppSelector((state) => state.auth);
 
@@ -36,13 +35,12 @@ const Navbar: React.FC<NavbarProps> = ({ onSearchSubmit }) => {
   const handleLogout = async () => {
     try {
       await dispatch(logout()).unwrap()
-      navigate('/')
       setIsMobileMenuOpen(false)
       setHasAuthInLocalStorage(false)
     } catch (err) {
       console.error('Ошибка при выходе :/ ', err)
     }
-  };
+  }
 
   useEffect(() => {
     if (isMobileMenuOpen) {
@@ -92,28 +90,42 @@ const Navbar: React.FC<NavbarProps> = ({ onSearchSubmit }) => {
                 </span>
               )}
             </Link>
+
             {showProfileButton ? (
               <div className="relative group">
-                <button className="text-gray-700 hover:text-amber-500 px-3 py-2">
-                  <User  className="h-6 w-6" />
-                  {user?.name && (
-                    <span className="ml-1 hidden lg:inline">{user?.name.split(' ')[0]}</span>
-                  )}
+                <button className="flex items-center text-gray-700 hover:text-amber-500 px-3 py-2">
+                  <User className="h-6 w-6" />
                 </button>
-                <div className="absolute right-0 w-48 mt-2 bg-white rounded-md shadow-lg hidden group-hover:block z-50">
-                  <Link to='/profile' className="block px-4 py-2 text-sm text-gray-700 hover:bg-amber-50">Профиль</Link>
-                  <Link to='/orders' className="block px-4 py-2 text-sm text-gray-700 hover:bg-amber-50">Заказы</Link>
+                <div className="absolute right-0 w-48 mt-2 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
+                  <Link 
+                    to="/profile" 
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-colors"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    Профиль
+                  </Link>
+                  <Link 
+                    to="/orders" 
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-colors"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    Заказы
+                  </Link>
                   <button
                     onClick={handleLogout}
-                    className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-amber-50"
+                    className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-amber-50 hover:text-amber-600 transition-colors"
                   >
                     Выйти
                   </button>
                 </div>
               </div>
             ) : (
-              <Link to="/login" className="text-gray-700 hover:text-amber-500 px-3 py-2">
-                <User  className="h-6 w-6" />
+              <Link 
+                to="/login" 
+                className="text-gray-700 hover:text-amber-500 px-3 py-2 transition-colors"
+                aria-label="Войти в аккаунт"
+              >
+                <User className="h-6 w-6" />
               </Link>
             )}
           </div>
