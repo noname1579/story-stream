@@ -34,12 +34,10 @@ const LoginPage: React.FC = () => {
     
     try {
       if (isLogin) {
-        // Если стоит галочка "Запомнить меня" - сохраняем данные
         if (rememberMe) {
           localStorage.setItem('rememberedEmail', email);
           localStorage.setItem('rememberedPassword', password);
         } else {
-          // Если галочка снята - очищаем сохраненные данные
           localStorage.removeItem('rememberedEmail');
           localStorage.removeItem('rememberedPassword');
         }

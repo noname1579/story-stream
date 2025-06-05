@@ -66,16 +66,12 @@ export const register = createAsyncThunk<User, RegisterCredentials>(
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ name, email, password }),
-      });
+      })
 
       const data = await response.json();
 
       if (!response.ok) {
         throw new Error(data.message || 'Ошибка регистрации');
-      }
-
-      if (!data.session.access_token) {
-        throw new Error('Подтвердите email для завершения регистрации');
       }
 
       localStorage.setItem('auth', JSON.stringify(data.user))
@@ -90,28 +86,20 @@ export const register = createAsyncThunk<User, RegisterCredentials>(
       dispatch(setLoading(false));
     }
   }
-);
+)
 
 export const logout = createAsyncThunk(
   'auth/logout',
   async (_, { dispatch }) => {
     try {
-      // Можно добавить запрос на сервер для выхода, если нужно
-      // await fetch(`${API_BASE_URL}/auth/logout`, {
-      //   method: 'POST',
-      //   headers: {
-      //     'Authorization': `Bearer ${localStorage.getItem('token')}`,
-      //   },
-      // });
-
-      localStorage.removeItem('auth');
-      localStorage.removeItem('token');
-      dispatch(clearAuthState());
+      localStorage.removeItem('auth')
+      localStorage.removeItem('token')
+      dispatch(clearAuthState())
     } catch (error) {
-      console.error('Ошибка при выходе:', error);
+      console.error('Ошибка при выходе:', error)
     }
   }
-);
+)
 
 export const checkAuth = createAsyncThunk<User>(
   'auth/checkAuth',

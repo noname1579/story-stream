@@ -18,7 +18,7 @@ const CartPage: React.FC = () => {
       alert('Вам необходимо авторизоваться')
       navigate('/login')
     }
-  }, [navigate]);
+  }, [navigate])
 
   if (cart.length === 0) {
     return (
