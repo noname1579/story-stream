@@ -120,7 +120,6 @@ const BooksPage: React.FC<BooksPageProps> = ({ searchQuery }) => {
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-        {/* Desktop Filters */}
         <div className="hidden md:block">
           <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 sticky top-4">
             <div className="flex justify-between items-center mb-6 pb-4 border-b border-gray-100">
@@ -162,45 +161,9 @@ const BooksPage: React.FC<BooksPageProps> = ({ searchQuery }) => {
                 ))}
               </div>
             </div>
-            
-            <div>
-              <h3 className="font-medium text-gray-700 mb-3">Сортировка</h3>
-              <div className="space-y-3">
-                <button
-                  onClick={() => setSortBy('title')}
-                  className={`w-full text-left px-4 py-2 rounded-lg transition-colors flex items-center ${sortBy === 'title' ? 'bg-amber-50 text-amber-700 font-medium' : 'hover:bg-gray-50 text-gray-600'}`}
-                >
-                  <span>По названию</span>
-                  {sortBy === 'title' && (
-                    sortOrder === 'asc' ? <ArrowUp className="h-4 w-4 ml-auto" /> : <ArrowDown className="h-4 w-4 ml-auto" />
-                  )}
-                </button>
-                
-                <button
-                  onClick={() => setSortBy('price')}
-                  className={`w-full text-left px-4 py-2 rounded-lg transition-colors flex items-center ${sortBy === 'price' ? 'bg-amber-50 text-amber-700 font-medium' : 'hover:bg-gray-50 text-gray-600'}`}
-                >
-                  <span>По цене</span>
-                  {sortBy === 'price' && (
-                    sortOrder === 'asc' ? <ArrowUp className="h-4 w-4 ml-auto" /> : <ArrowDown className="h-4 w-4 ml-auto" />
-                  )}
-                </button>
-
-                <button
-                  onClick={() => setSortBy('rating')}
-                  className={`w-full text-left px-4 py-2 rounded-lg transition-colors flex items-center ${sortBy === 'rating' ? 'bg-amber-50 text-amber-700 font-medium' : 'hover:bg-gray-50 text-gray-600'}`}
-                >
-                  <span>По рейтингу</span>
-                  {sortBy === 'rating' && (
-                    sortOrder === 'asc' ? <ArrowUp className="h-4 w-4 ml-auto" /> : <ArrowDown className="h-4 w-4 ml-auto" />
-                  )}
-                </button>
-              </div>
-            </div>
           </div>
         </div>
         
-        {/* Mobile Filters */}
         {isMobileFilterOpen && (
           <div className="md:hidden fixed inset-0 bg-black bg-opacity-30 z-50 flex justify-end">
             <div className="bg-white w-full max-w-sm h-full overflow-y-auto p-6 animate-slide-in">
