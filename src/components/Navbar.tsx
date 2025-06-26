@@ -26,7 +26,7 @@ const Navbar: React.FC<NavbarProps> = ({ onSearchSubmit }) => {
   const handleSearchSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     onSearchSubmit(searchQuery)
-  };
+  }
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen)

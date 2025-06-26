@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useSearchParams, useLocation } from 'react-router-dom'
 import BookGrid from '../components/BookGrid'
 import { useBooks } from '../data/books'
-import { Filter, X } from 'lucide-react'
+import { Filter, X, ArrowUp, ArrowDown } from 'lucide-react'
 import { TailChase } from 'ldrs/react'
 import 'ldrs/react/TailChase.css'
 
@@ -111,207 +111,230 @@ const BooksPage: React.FC<BooksPageProps> = ({ searchQuery }) => {
         </h1>
         
         <button
-          className="md:hidden flex items-center text-gray-700 hover:text-amber-500"
+          className="md:hidden flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-lg transition-colors"
           onClick={() => setIsMobileFilterOpen(!isMobileFilterOpen)}
         >
-          <Filter className="h-5 w-5 mr-1" />
-          Фильтры
+          <Filter className="h-5 w-5" />
+          <span>Фильтры</span>
         </button>
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+        {/* Desktop Filters */}
         <div className="hidden md:block">
-          <div className="bg-white rounded-lg shadow-md p-6">
-            <h2 className="font-serif text-lg font-semibold text-gray-800 mb-4">Фильтры</h2>
+          <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 sticky top-4">
+            <div className="flex justify-between items-center mb-6 pb-4 border-b border-gray-100">
+              <h2 className="font-serif text-xl font-semibold text-gray-800">Фильтры</h2>
+              {selectedGenre && (
+                <button
+                  onClick={() => setSelectedGenre('')}
+                  className="text-sm text-amber-600 hover:text-amber-700 flex items-center"
+                >
+                  <X className="h-4 w-4 mr-1" />
+                  Сбросить
+                </button>
+              )}
+            </div>
             
-            <div className="mb-6">
-              <h3 className="font-medium text-gray-700 mb-2">Жанры</h3>
-              <div className="space-y-2">
-                <label className="flex items-center">
-                  <input
-                    type="radio"
-                    name="genre"
-                    checked={selectedGenre === ''}
-                    onChange={() => setSelectedGenre('')}
-                    className="text-amber-500 focus:ring-amber-500"
-                  />
-                  <span className="ml-2 text-gray-600">Все жанры</span>
-                </label>
+            <div className="mb-8">
+              <h3 className="font-medium text-gray-700 mb-3 flex items-center">
+                <span>Жанры</span>
+                <span className="ml-auto text-xs bg-gray-100 text-gray-500 px-2 py-1 rounded-full">
+                  {allGenres.length}
+                </span>
+              </h3>
+              <div className="space-y-3">
+                <button
+                  onClick={() => setSelectedGenre('')}
+                  className={`w-full text-left px-4 py-2 rounded-lg transition-colors flex items-center ${selectedGenre === '' ? 'bg-amber-50 text-amber-700 font-medium' : 'hover:bg-gray-50 text-gray-600'}`}
+                >
+                  <span className="truncate">Все жанры</span>
+                </button>
                 
                 {allGenres.map((genre) => (
-                  <label key={genre} className="flex items-center">
-                    <input
-                      type="radio"
-                      name="genre"
-                      checked={selectedGenre === genre}
-                      onChange={() => setSelectedGenre(genre)}
-                      className="text-amber-500 focus:ring-amber-500"
-                    />
-                    <span className="ml-2 text-gray-600">{genre}</span>
-                  </label>
+                  <button
+                    key={genre}
+                    onClick={() => setSelectedGenre(genre)}
+                    className={`w-full text-left px-4 py-2 rounded-lg transition-colors flex items-center ${selectedGenre === genre ? 'bg-amber-50 text-amber-700 font-medium' : 'hover:bg-gray-50 text-gray-600'}`}
+                  >
+                    <span className="truncate">{genre}</span>
+                  </button>
                 ))}
               </div>
             </div>
             
             <div>
-              <h3 className="font-medium text-gray-700 mb-2">Сортировка по</h3>
-              <div className="space-y-2">
-                <label className="flex items-center">
-                  <input
-                    type="radio"
-                    name="sortBy"
-                    checked={sortBy === 'title'}
-                    onChange={() => setSortBy('title')}
-                    className="text-amber-500 focus:ring-amber-500"
-                  />
-                  <span className="ml-2 text-gray-600">Названию</span>
-                </label>
+              <h3 className="font-medium text-gray-700 mb-3">Сортировка</h3>
+              <div className="space-y-3">
+                <button
+                  onClick={() => setSortBy('title')}
+                  className={`w-full text-left px-4 py-2 rounded-lg transition-colors flex items-center ${sortBy === 'title' ? 'bg-amber-50 text-amber-700 font-medium' : 'hover:bg-gray-50 text-gray-600'}`}
+                >
+                  <span>По названию</span>
+                  {sortBy === 'title' && (
+                    sortOrder === 'asc' ? <ArrowUp className="h-4 w-4 ml-auto" /> : <ArrowDown className="h-4 w-4 ml-auto" />
+                  )}
+                </button>
                 
-                <label className="flex items-center">
-                  <input
-                    type="radio"
-                    name="sortBy"
-                    checked={sortBy === 'price'}
-                    onChange={() => setSortBy('price')}
-                    className="text-amber-500 focus:ring-amber-500"
-                  />
-                  <span className="ml-2 text-gray-600">Цене</span>
-                </label>
+                <button
+                  onClick={() => setSortBy('price')}
+                  className={`w-full text-left px-4 py-2 rounded-lg transition-colors flex items-center ${sortBy === 'price' ? 'bg-amber-50 text-amber-700 font-medium' : 'hover:bg-gray-50 text-gray-600'}`}
+                >
+                  <span>По цене</span>
+                  {sortBy === 'price' && (
+                    sortOrder === 'asc' ? <ArrowUp className="h-4 w-4 ml-auto" /> : <ArrowDown className="h-4 w-4 ml-auto" />
+                  )}
+                </button>
 
-                <label className="flex items-center">
-                  <input
-                    type="radio"
-                    name="sortBy"
-                    checked={sortBy === 'rating'}
-                    onChange={() => setSortBy('rating')}
-                    className="text-amber-500 focus:ring-amber-500"
-                  />
-                  <span className="ml-2 text-gray-600">Рейтингу</span>
-                </label>
+                <button
+                  onClick={() => setSortBy('rating')}
+                  className={`w-full text-left px-4 py-2 rounded-lg transition-colors flex items-center ${sortBy === 'rating' ? 'bg-amber-50 text-amber-700 font-medium' : 'hover:bg-gray-50 text-gray-600'}`}
+                >
+                  <span>По рейтингу</span>
+                  {sortBy === 'rating' && (
+                    sortOrder === 'asc' ? <ArrowUp className="h-4 w-4 ml-auto" /> : <ArrowDown className="h-4 w-4 ml-auto" />
+                  )}
+                </button>
               </div>
             </div>
           </div>
         </div>
         
+        {/* Mobile Filters */}
         {isMobileFilterOpen && (
-          <div className="md:hidden fixed inset-0 bg-black bg-opacity-25 z-50 flex justify-end">
-            <div className="bg-white w-3/4 h-full overflow-y-auto p-6">
-              <div className="flex justify-between items-center mb-4">
-                <h2 className="font-serif text-lg font-semibold text-gray-800">Фильтры</h2>
+          <div className="md:hidden fixed inset-0 bg-black bg-opacity-30 z-50 flex justify-end">
+            <div className="bg-white w-full max-w-sm h-full overflow-y-auto p-6 animate-slide-in">
+              <div className="flex justify-between items-center mb-6 pb-4 border-b border-gray-100">
+                <h2 className="font-serif text-xl font-semibold text-gray-800">Фильтры</h2>
                 <button
                   onClick={() => setIsMobileFilterOpen(false)}
-                  className="text-gray-500"
+                  className="text-gray-500 hover:text-gray-700 p-1"
                 >
-                  <X className="h-5 w-5" />
+                  <X className="h-6 w-6" />
                 </button>
               </div>
               
-              <div className="mb-6">
-                <h3 className="font-medium text-gray-700 mb-2">Жанры</h3>
-                <div className="space-y-2">
-                  <label className="flex items-center">
-                    <input
-                      type="radio"
-                      name="genre-mobile"
-                      checked={selectedGenre === ''}
-                      onChange={() => {
-                        setSelectedGenre('')
-                        setIsMobileFilterOpen(false)
-                      }}
-                      className="text-amber-500 focus:ring-amber-500"
-                    />
-                    <span className="ml-2 text-gray-600">Все жанры</span>
-                  </label>
+              <div className="mb-8">
+                <h3 className="font-medium text-gray-700 mb-3">Жанры</h3>
+                <div className="grid grid-cols-2 gap-2">
+                  <button
+                    onClick={() => {
+                      setSelectedGenre('')
+                      setIsMobileFilterOpen(false)
+                    }}
+                    className={`px-4 py-2 rounded-lg transition-colors text-sm ${selectedGenre === '' ? 'bg-amber-500 text-white font-medium' : 'bg-gray-100 hover:bg-gray-200 text-gray-700'}`}
+                  >
+                    Все жанры
+                  </button>
                   
                   {allGenres.map((genre) => (
-                    <label key={genre} className="flex items-center">
-                      <input
-                        type="radio"
-                        name="genre-mobile"
-                        checked={selectedGenre === genre}
-                        onChange={() => {
-                          setSelectedGenre(genre)
-                          setIsMobileFilterOpen(false)
-                        }}
-                        className="text-amber-500 focus:ring-amber-500"
-                      />
-                      <span className="ml-2 text-gray-600">{genre}</span>
-                    </label>
+                    <button
+                      key={genre}
+                      onClick={() => {
+                        setSelectedGenre(genre)
+                        setIsMobileFilterOpen(false)
+                      }}
+                      className={`px-4 py-2 rounded-lg transition-colors text-sm ${selectedGenre === genre ? 'bg-amber-500 text-white font-medium' : 'bg-gray-100 hover:bg-gray-200 text-gray-700'}`}
+                    >
+                      {genre}
+                    </button>
                   ))}
                 </div>
               </div>
               
-              <div>
-                <h3 className="font-medium text-gray-700 mb-2">Сортировка по</h3>
+              <div className="mb-8">
+                <h3 className="font-medium text-gray-700 mb-3">Сортировка</h3>
                 <div className="space-y-2">
-                  <label className="flex items-center">
-                    <input
-                      type="radio"
-                      name="sortBy-mobile"
-                      checked={sortBy === 'title'}
-                      onChange={() => {
-                        setSortBy('title')
-                        setIsMobileFilterOpen(false)
-                      }}
-                      className="text-amber-500 focus:ring-amber-500"
-                    />
-                    <span className="ml-2 text-gray-600">Названию</span>
-                  </label>
+                  <button
+                    onClick={() => {
+                      setSortBy('title')
+                      setIsMobileFilterOpen(false)
+                    }}
+                    className={`w-full text-left px-4 py-3 rounded-lg transition-colors flex items-center ${sortBy === 'title' ? 'bg-amber-50 text-amber-700 font-medium border border-amber-200' : 'hover:bg-gray-50 text-gray-600 border border-gray-100'}`}
+                  >
+                    <span>По названию</span>
+                    {sortBy === 'title' && (
+                      sortOrder === 'asc' ? <ArrowUp className="h-4 w-4 ml-auto" /> : <ArrowDown className="h-4 w-4 ml-auto" />
+                    )}
+                  </button>
                   
-                  <label className="flex items-center">
-                    <input
-                      type="radio"
-                      name="sortBy-mobile"
-                      checked={sortBy === 'price'}
-                      onChange={() => {
-                        setSortBy('price')
-                        setIsMobileFilterOpen(false)
-                      }}
-                      className="text-amber-500 focus:ring-amber-500"
-                    />
-                    <span className="ml-2 text-gray-600">Цене</span>
-                  </label>
+                  <button
+                    onClick={() => {
+                      setSortBy('price')
+                      setIsMobileFilterOpen(false)
+                    }}
+                    className={`w-full text-left px-4 py-3 rounded-lg transition-colors flex items-center ${sortBy === 'price' ? 'bg-amber-50 text-amber-700 font-medium border border-amber-200' : 'hover:bg-gray-50 text-gray-600 border border-gray-100'}`}
+                  >
+                    <span>По цене</span>
+                    {sortBy === 'price' && (
+                      sortOrder === 'asc' ? <ArrowUp className="h-4 w-4 ml-auto" /> : <ArrowDown className="h-4 w-4 ml-auto" />
+                    )}
+                  </button>
 
-                  <label className="flex items-center">
-                    <input
-                      type="radio"
-                      name="sortBy-mobile"
-                      checked={sortBy === 'rating'}
-                      onChange={() => {
-                        setSortBy('rating')
-                        setIsMobileFilterOpen(false)
-                      }}
-                      className="text-amber-500 focus:ring-amber-500"
-                    />
-                    <span className="ml-2 text-gray-600">Рейтингу</span>
-                  </label>
+                  <button
+                    onClick={() => {
+                      setSortBy('rating')
+                      setIsMobileFilterOpen(false)
+                    }}
+                    className={`w-full text-left px-4 py-3 rounded-lg transition-colors flex items-center ${sortBy === 'rating' ? 'bg-amber-50 text-amber-700 font-medium border border-amber-200' : 'hover:bg-gray-50 text-gray-600 border border-gray-100'}`}
+                  >
+                    <span>По рейтингу</span>
+                    {sortBy === 'rating' && (
+                      sortOrder === 'asc' ? <ArrowUp className="h-4 w-4 ml-auto" /> : <ArrowDown className="h-4 w-4 ml-auto" />
+                    )}
+                  </button>
                 </div>
               </div>
+              
+              <button
+                onClick={() => setIsMobileFilterOpen(false)}
+                className="w-full bg-amber-500 hover:bg-amber-600 text-white font-medium py-3 px-4 rounded-lg transition-colors mt-4"
+              >
+                Применить фильтры
+              </button>
             </div>
           </div>
         )}
         
+        {/* Books Content */}
         <div className="md:col-span-3">
-          <div className="bg-white rounded-lg shadow-md p-4 md:p-6 mb-6">
-            <div className="block md:flex items-center justify-between">
-              <div>
-                <span className="text-gray-800 text-sm md:text-lg">
-                  Показано {visibleBooks.length} из {filteredBooks.length} книг
-                </span>
+          <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-4 md:p-6 mb-6">
+            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+              <div className="text-gray-600">
+                <span className="font-medium text-amber-600">{filteredBooks.length}</span> книг найдено
               </div>
               
-              <div className="flex items-center mt-2 md:mt-0">
-                <span className="mr-2 text-gray-600 text-sm md:text-lg">Сортировка:</span>
-                <button
-                  onClick={toggleSortOrder}
-                  className="flex items-center text-gray-700 hover:text-amber-500 transition-colors"
-                  title={`Сортировать ${sortOrder === 'asc' ? 'по убыванию' : 'по возрастанию'}`}
-                >
-                  {sortOrder === 'asc' 
-                    ? <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiM2YjcyODAiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS1hcnJvdy11cC1pY29uIGx1Y2lkZS1hcnJvdy11cCI+PHBhdGggZD0ibTUgMTIgNy03IDcgNyIvPjxwYXRoIGQ9Ik0xMiAxOVY1Ii8+PC9zdmc+" className="h-5 w-5" /> 
-                    : <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IiM2YjcyODAiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBjbGFzcz0ibHVjaWRlIGx1Y2lkZS1hcnJvdy1kb3duLWljb24gbHVjaWRlLWFycm93LWRvd24iPjxwYXRoIGQ9Ik0xMiA1djE0Ii8+PHBhdGggZD0ibTE5IDEyLTcgNy03LTciLz48L3N2Zz4=" className="h-5 w-5" />
-                  }
-                </button>
+              <div className="flex items-center gap-4">
+                <div className="hidden md:block text-sm text-gray-500">
+                  Сортировка:
+                </div>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => setSortBy('title')}
+                    className={`px-3 py-1.5 rounded-lg text-sm transition-colors ${sortBy === 'title' ? 'bg-amber-100 text-amber-700 font-medium' : 'bg-gray-100 hover:bg-gray-200 text-gray-700'}`}
+                  >
+                    Название
+                  </button>
+                  <button
+                    onClick={() => setSortBy('price')}
+                    className={`px-3 py-1.5 rounded-lg text-sm transition-colors ${sortBy === 'price' ? 'bg-amber-100 text-amber-700 font-medium' : 'bg-gray-100 hover:bg-gray-200 text-gray-700'}`}
+                  >
+                    Цена
+                  </button>
+                  <button
+                    onClick={() => setSortBy('rating')}
+                    className={`px-3 py-1.5 rounded-lg text-sm transition-colors ${sortBy === 'rating' ? 'bg-amber-100 text-amber-700 font-medium' : 'bg-gray-100 hover:bg-gray-200 text-gray-700'}`}
+                  >
+                    Рейтинг
+                  </button>
+                  <button
+                    onClick={toggleSortOrder}
+                    className="p-1.5 rounded-lg bg-gray-100 hover:bg-gray-200 text-gray-700 transition-colors"
+                    title={`Сортировать ${sortOrder === 'asc' ? 'по убыванию' : 'по возрастанию'}`}
+                  >
+                    {sortOrder === 'asc' ? <ArrowUp className="h-4 w-4" /> : <ArrowDown className="h-4 w-4" />}
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -320,10 +343,10 @@ const BooksPage: React.FC<BooksPageProps> = ({ searchQuery }) => {
             <>
               <BookGrid books={visibleBooks} />
               {hasMoreBooks && (
-                <div className="mt-6 text-center">
+                <div className="mt-8 text-center">
                   <button
                     onClick={loadMoreBooks}
-                    className="bg-amber-500 hover:bg-amber-600 text-white font-medium py-2 px-6 rounded-full transition-colors"
+                    className="bg-amber-500 hover:bg-amber-600 text-white font-medium py-3 px-8 rounded-lg transition-colors shadow-sm hover:shadow-md"
                   >
                     Показать еще книги
                   </button>
@@ -331,11 +354,22 @@ const BooksPage: React.FC<BooksPageProps> = ({ searchQuery }) => {
               )}
             </>
           ) : (
-            <div className="bg-white rounded-lg shadow-md p-8 text-center">
+            <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-8 text-center">
               <h2 className="text-xl font-serif font-semibold text-gray-800 mb-2">Книги не найдены</h2>
-              <p className="text-gray-600">
-                Попробуйте изменить критерии поиска или фильтрации, чтобы найти то, что вы ищете
+              <p className="text-gray-600 mb-4">
+                Попробуйте изменить критерии поиска или фильтрации
               </p>
+              <button
+                onClick={() => {
+                  setSelectedGenre('')
+                  setSortBy('title')
+                  setSortOrder('asc')
+                }}
+                className="text-amber-600 hover:text-amber-700 font-medium flex items-center justify-center mx-auto"
+              >
+                <X className="h-4 w-4 mr-1" />
+                Сбросить фильтры
+              </button>
             </div>
           )}
         </div>
